@@ -16,6 +16,7 @@ export default function Layout ({children, siteTitle}) {
             <main className="wrapper">
                 {children}
             </main>
+            {/* TODO: Hier bitte Alert für #3 */}
         </>
     );
 }
