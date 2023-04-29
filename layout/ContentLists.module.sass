@@ -1,2 +1,30 @@
 .listItem
-    @apply flex justify-between gap-x-6 py-5
+    @apply flex justify-between gap-x-6 bg-slate-50 my-5 shadow
+
+    .listIcon
+        @apply p-5 bg-slate-100
+
+    .listContent
+        @apply my-auto
+
+        .summary
+            @apply font-semibold
+        .meta
+            @apply text-sm font-light
+
+.listItem
+    &:hover
+        @apply text-zinc-100
+
+        .listIcon, .listContent .summary
+            @apply text-zinc-100
+
+.listItemPrimary
+    .listIcon, .listContent .summary
+        @apply text-primary
+    
+    &:hover
+        @apply bg-primary
+
+        .listIcon
+            @apply bg-primary-600

@@ -1,24 +1,28 @@
 import style from '@/layout/ContentLists.module.sass';
 import { faBuilding } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
+import Link from 'next/link';
 
 const CompaniesList = ({content}) => {
     return (
         <div className={style.listWrapper}>
             { content && content.data.map((item) => {
                 return (
-                    <div className={`${style.listItem}`}>
-                        <div className={` ${style.listIcon} flex-none w-5 m-auto`}>
-                            <FontAwesomeIcon icon={faBuilding} />
-                        </div>
-                        <div className={`${style.listContent} flex-auto`}>
+                    <Link href={'/company/'+item.attributes.hr_number}>
+                        <div className={`${style.listItem} ${style.listItemPrimary} rounded-lg`}>
+                            <div className={` ${style.listIcon} flex-none rounded-l-lg`}>
+                                <div className='w-5'>
+                                    <FontAwesomeIcon icon={faBuilding} />
+                                </div>
+                            </div>
+                            <div className={`${style.listContent} flex-auto`}>
                                 <p className={`${style.summary}`}>{item.attributes.company_name} 
                                 {item.attributes.main_branch.data?.attributes?.city ? (', '+item.attributes.main_branch.data?.attributes?.city) : ''}</p>
-                            <p className={`${style.meta}`}>{item.attributes.hr_court ? (item.attributes.hr_court+' | ') : ''}
-                            {item.attributes.hr_dept} {item.attributes.hr_number}</p>
+                                <p className={`${style.meta}`}>{item.attributes.hr_court ? (item.attributes.hr_court+' | ') : ''}
+                                {item.attributes.hr_dept} {item.attributes.hr_number}</p>
+                            </div>
                         </div>
-                    </div>
+                    </Link>
                 );
             })}
         </div>
