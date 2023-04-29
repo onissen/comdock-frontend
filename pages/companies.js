@@ -14,7 +14,7 @@ export default Companies
 
 export async function getStaticProps() {
     const contentResponse = await fetcher(
-      `${process.env.NEXT_PUBLIC_STRAPI_URL}/companies?populate=*`
+      `${process.env.NEXT_PUBLIC_STRAPI_URL}/companies?fields[0]=company_name&fields[1]=hr_court&fields[2]=hr_dept&fields[3]=hr_number&populate=main_branch`
     );
     return {
       props: {
