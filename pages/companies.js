@@ -1,24 +1,24 @@
 import Layout from "@/components/common/Layout";
-import ContentLists from "@/components/specific/ContentLists";
+import CompaniesList from "@/components/specific/CompaniesList";
 import { fetcher } from "@/helpers/api";
 
 const Companies = ({companies}) => {
     return(
-        <Layout>
+        <Layout siteTitle="Firmen">
           <h1>Firmen</h1>
-          <ContentLists content={companies} />
+          <CompaniesList content={companies} />
         </Layout>
     )
 }
 export default Companies
 
 export async function getStaticProps() {
-    const compsResponse = await fetcher(
-      `${process.env.NEXT_PUBLIC_STRAPI_URL}/companies`
+    const contentResponse = await fetcher(
+      `${process.env.NEXT_PUBLIC_STRAPI_URL}/companies?populate=*`
     );
     return {
       props: {
-        companies: compsResponse,
+        companies: contentResponse,
       },
     };
   }
