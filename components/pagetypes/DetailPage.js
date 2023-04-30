@@ -2,9 +2,36 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import PageHeader from "../specific/PageHeader"
 import { faBuilding, faUser } from "@fortawesome/free-solid-svg-icons"
 import Link from "next/link"
+import { useEffect, useState } from "react"
 
 
 export default function DetailPage({title, children, contentType}) {
+    const [activeLink, setActiveLink] = useState();
+    
+    useEffect(() => {
+        const handleScroll = () => {
+            const sections = document.querySelectorAll('.detailSection');
+            let currentActiveLink = '';
+        
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionBottom = sectionTop + section.offsetHeight;
+                const scrollPosition = window.scrollY;
+        
+                if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                currentActiveLink = section.id;
+                }
+            });
+        
+            if (currentActiveLink !== activeLink) {
+                setActiveLink(currentActiveLink);
+            }
+        };
+      
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [activeLink]);
+
     return (
         <>
             <PageHeader>
@@ -24,7 +51,7 @@ export default function DetailPage({title, children, contentType}) {
                                 if (child.type == 'section') {
                                     return (
                                         <li key={child.props.id}>
-                                            <Link href={`#${child.props.id}`}>
+                                            <Link href={`#${child.props.id}`} className={activeLink === child.props.id ? 'bg-primary' : ''}>
                                                 {child.props.children[0].props.children}
                                             </Link>
                                         </li>
