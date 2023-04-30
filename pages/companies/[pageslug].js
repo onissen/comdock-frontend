@@ -43,30 +43,6 @@ const CompanyDetail = ({item}) => {
                     <h4 className="sectionLabel">Netzwerk</h4>
                     Netzwerk CardList
                 </section>
-                <section id="lorem-1" className="detailSection">
-                    <h4 className="sectionLabel">Lorem 1</h4>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, mollitia! Quidem non deserunt ullam, aspernatur accusantium corporis delectus provident sit vero quod quaerat quos repudiandae veritatis voluptatibus? Adipisci, nihil eos.</p>
-                </section>
-                <section id="lorem-2" className="detailSection">
-                    <h4 className="sectionLabel">Lorem 2</h4>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, mollitia! Quidem non deserunt ullam, aspernatur accusantium corporis delectus provident sit vero quod quaerat quos repudiandae veritatis voluptatibus? Adipisci, nihil eos.</p>
-                </section>
-                <section id="lorem-3" className="detailSection">
-                    <h4 className="sectionLabel">Lorem 3</h4>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, mollitia! Quidem non deserunt ullam, aspernatur accusantium corporis delectus provident sit vero quod quaerat quos repudiandae veritatis voluptatibus? Adipisci, nihil eos.</p>
-                </section>
-                <section id="lorem-4" className="detailSection">
-                    <h4 className="sectionLabel">Lorem 4</h4>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, mollitia! Quidem non deserunt ullam, aspernatur accusantium corporis delectus provident sit vero quod quaerat quos repudiandae veritatis voluptatibus? Adipisci, nihil eos.</p>
-                </section>
-                <section id="lorem-5" className="detailSection">
-                    <h4 className="sectionLabel">Lorem 5</h4>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, mollitia! Quidem non deserunt ullam, aspernatur accusantium corporis delectus provident sit vero quod quaerat quos repudiandae veritatis voluptatibus? Adipisci, nihil eos.</p>
-                </section>
-                <section id="lorem-6" className="detailSection">
-                    <h4 className="sectionLabel">Lorem 6</h4>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, mollitia! Quidem non deserunt ullam, aspernatur accusantium corporis delectus provident sit vero quod quaerat quos repudiandae veritatis voluptatibus? Adipisci, nihil eos.</p>
-                </section>
             </DetailPage>
         </Layout>
     )

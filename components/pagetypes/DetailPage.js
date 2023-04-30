@@ -3,9 +3,12 @@ import PageHeader from "../specific/PageHeader"
 import { faBuilding, faUser } from "@fortawesome/free-solid-svg-icons"
 import Link from "next/link"
 import { useEffect, useState } from "react"
+import { DateUtils } from "@/helpers/helpScripts"
 
 
 export default function DetailPage({title, children, contentType}) {
+    const now = DateUtils.getCurrentDate();
+
     const [activeLink, setActiveLink] = useState();
     
     useEffect(() => {
@@ -51,7 +54,7 @@ export default function DetailPage({title, children, contentType}) {
                                 if (child.type == 'section') {
                                     return (
                                         <li key={child.props.id}>
-                                            <Link href={`#${child.props.id}`} className={activeLink === child.props.id ? 'bg-primary' : ''}>
+                                            <Link href={`#${child.props.id}`} className={`toc-item rounded-r ${activeLink === child.props.id ? 'active' : ''}`}>
                                                 {child.props.children[0].props.children}
                                             </Link>
                                         </li>
@@ -59,6 +62,7 @@ export default function DetailPage({title, children, contentType}) {
                                 };
                             })}
                         </ul>
+                        <p className="toc-text">Abruf vom {now}</p>
                     </div>
                 </aside>
                 <article className="wrapper">
