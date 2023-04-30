@@ -6,7 +6,7 @@ const CompanyDetail = ({item}) => {
     return(
         <Layout siteTitle={item.attributes.company_name}>
             <DetailPage title={item.attributes.company_name+', '+item.attributes.main_branch.data.attributes.city} contentType='company'>
-                <section id="class_name" class="detailSection">
+                <section id="company_name" class="detailSection">
                     <h4 className="sectionLabel">Firma</h4>
                     <p>{item.attributes.company_name}</p>
                     <p>former_names</p>
