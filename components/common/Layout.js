@@ -2,8 +2,9 @@
 
 import Head from "next/head";
 import Nav from "./Nav";
+import PageHeader from "../specific/PageHeader";
 
-export default function Layout ({children, siteTitle}) {
+export default function Layout ({children, siteTitle, nopageHeader}) {
     return (
         <>
             <Head>
@@ -12,10 +13,10 @@ export default function Layout ({children, siteTitle}) {
                     {siteTitle ? (siteTitle+' | ') : ('')} COMDOCK Index
                 </title>
             </Head>
-            <Nav />
-            <main className="wrapper">
+            <Nav nopageHeader={nopageHeader} />
+            <main>
                 {children}
-            </main>
+            </main>            
             {/* TODO: Hier bitte Alert für #3 */}
         </>
     );

@@ -12,17 +12,17 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Nav() {
+export default function Nav({nopageHeader}) {
   const router = useRouter();
   const updatedNavigation = navigation.map((item) => ({
     ...item,
     current: item.href === router.pathname,
   }));
   return (
-    <Disclosure as="nav" className="bg-primary">
+    <Disclosure as="nav" className={`bg-primary-600 ${nopageHeader ? 'rounded-b-lg' : ''}`}>
       {({ open }) => (
         <>
-          <div className="nav-wrapper">
+          <div className="nav-wrapper border-zinc-100/10 border-y">
             <div className="relative flex h-16 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
@@ -38,13 +38,8 @@ export default function Nav() {
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
                   <img
-                    className="block h-8 w-auto lg:hidden"
-                    src="./icons/icon-light.svg"
-                    alt="COMDOCK Index"
-                  />
-                  <img
-                    className="hidden h-8 w-auto lg:block"
-                    src="./icons/icon-light.svg"
+                    className="block h-8 w-auto"
+                    src="/icons/icon-light.svg"
                     alt="COMDOCK Index"
                   />
                 </div>
