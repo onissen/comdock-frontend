@@ -1,11 +1,13 @@
 import Layout from "@/components/common/Layout"
+import DetailPage from "@/components/pagetypes/DetailPage";
 import { fetcher } from "@/helpers/api";
-import { faBuilding } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const CompanyDetail = ({item}) => {
     return(
         <Layout siteTitle={item.attributes.company_name}>
+            <DetailPage title={item.attributes.company_name+', '+item.attributes.main_branch.data.attributes.city} contentType='company'>
+                Artikel
+            </DetailPage>
         </Layout>
     )
 }
