@@ -10,7 +10,7 @@ export default function Layout ({children, siteTitle, nopageHeader}) {
             <Head>
                 <link rel="shortcut icon" href="/icons/icon-primary.svg" />
                 <title>
-                    {siteTitle ? (siteTitle+' | ') : ('')} COMDOCK Index
+                    {siteTitle ? (siteTitle+' | '+'COMDOCK Index') : ('COMDOCK Index')}
                 </title>
             </Head>
             <Nav nopageHeader={nopageHeader} />
