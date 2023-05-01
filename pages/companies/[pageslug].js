@@ -1,5 +1,6 @@
 import Layout from "@/components/common/Layout"
 import DetailPage from "@/components/pagetypes/DetailPage";
+import NetworkList from "@/components/specific/NetworkList";
 import { fetcher } from "@/helpers/api";
 import { faArrowRightArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -72,10 +73,14 @@ const CompanyDetail = ({item}) => {
                         <p>{item.attributes.corp_object}</p>
                     </section>
                 ) : '' }
-                <section id="network" className="detailSection">
-                    <h4 className="sectionLabel">Netzwerk</h4>
-                    Netzwerk CardList
-                </section>
+                {item.attributes.networkCompanies.length > 0 || item.attributes.networkPersons.length > 0 ? (
+                    <section id="network" className="detailSection">
+                        <h4 className="sectionLabel">Netzwerk</h4>
+                        <div>
+                            <NetworkList />
+                        </div>
+                    </section>
+                ) : '' }
             </DetailPage>
         </Layout>
     )
