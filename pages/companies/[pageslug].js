@@ -5,7 +5,7 @@ import { fetcher } from "@/helpers/api";
 import { faArrowRightArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const CompanyDetail = ({item}) => {
+const CompanyDetail = ({item, networkInfo}) => {
     return(
         <Layout siteTitle={item.attributes.company_name}>
             <DetailPage 
@@ -17,18 +17,18 @@ const CompanyDetail = ({item}) => {
                 <section id="company_name" className="detailSection">
                     <h4 className="sectionLabel">Firma</h4>
                     <p>{item.attributes.company_name}</p>
-                    <p id="furtherNames">
+                    <div id="furtherNames">
                         {item.attributes.furtherNames &&
-                            item.attributes.furtherNames.map((furtherName) => {
-                                return (
-                                    <p className="flex text-primary-400/50" key={furtherName.id}>
-                                        <FontAwesomeIcon icon={faArrowRightArrowLeft} className="w-3 flex-none mr-2" />
-                                        <span className="flex-auto text-sm">{furtherName.further_cname}</span>
-                                    </p>
-                                )
+                          item.attributes.furtherNames.map((furtherName) => {
+                            return (
+                                <div className="flex text-primary-400/50" key={furtherName.id}>
+                                    <FontAwesomeIcon icon={faArrowRightArrowLeft} className="w-3 flex-none mr-2" />
+                                    <span className="flex-auto text-sm">{furtherName.further_cname}</span>
+                                </div>
+                            )
                             })
                         } 
-                    </p>
+                    </div>
                 </section>
                 <section id="register" className="detailSection">
                     <h4 className="sectionLabel">Register</h4>
@@ -77,7 +77,7 @@ const CompanyDetail = ({item}) => {
                     <section id="network" className="detailSection">
                         <h4 className="sectionLabel">Netzwerk</h4>
                         <div>
-                            <NetworkList />
+                            <NetworkList networkInfo={networkInfo} />
                         </div>
                     </section>
                 ) : '' }
@@ -92,9 +92,13 @@ export async function getServerSideProps({params}) {
     const contentResponse = await fetcher(
         `${process.env.NEXT_PUBLIC_STRAPI_URL}/slugify/slugs/company/${pageslug}?populate=*&_sort=furtherNames.name_upto:ASC`
     )
+    const networkResponse = await fetcher(
+    `${process.env.NEXT_PUBLIC_STRAPI_URL}/slugify/slugs/company/${pageslug}?fields=hr_number&populate[networkCompanies][populate][connected_company][fields][0]=company_name&populate[networkPersons][populate][connected_person][fields][0]=first_name,sir_name`
+    )
     return{
         props: {
-            item: contentResponse.data
+            item: contentResponse.data,
+            networkInfo: networkResponse.data
         }
     }
 }
