@@ -13,7 +13,7 @@
             @apply text-sm font-light
 
 .listItem
-    &:hover
+    &:hover, &.headItem
         @apply text-zinc-100
 
         .listIcon, .listContent .summary
@@ -23,8 +23,12 @@
     .listIcon, .listContent .summary
         @apply text-primary
     
-    &:hover
+    &:hover, &.headItem
         @apply bg-primary
 
         .listIcon
             @apply bg-primary-600
+
+.networkTitle
+    @apply text-center p-2
+    @apply bg-primary text-zinc-100

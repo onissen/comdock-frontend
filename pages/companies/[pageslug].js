@@ -16,8 +16,8 @@ const CompanyDetail = ({item, networkInfo}) => {
                 contentType='company'>
                 <section id="company_name" className="detailSection">
                     <h4 className="sectionLabel">Firma</h4>
-                    <p>{item.attributes.company_name}</p>
-                    <div id="furtherNames">
+                    <p className="my-2">{item.attributes.company_name}</p>
+                    <div id="furtherNames" className="my-2">
                         {item.attributes.furtherNames &&
                           item.attributes.furtherNames.map((furtherName) => {
                             return (
@@ -32,12 +32,12 @@ const CompanyDetail = ({item, networkInfo}) => {
                 </section>
                 <section id="register" className="detailSection">
                     <h4 className="sectionLabel">Register</h4>
-                    <p id="hr">
+                    <p id="hr" className="my-2">
                         <span className="badge">HR</span>
                         <span>{item.attributes.hr_court} | {item.attributes.hr_dept+' '+item.attributes.hr_number}</span>
                     </p>
                     {item.attributes.lei ? (
-                        <p id="lei">
+                        <p id="lei" className="my-2">
                             <span className="badge">LEI</span>
                             <span>{item.attributes.lei}</span>
                         </p>
@@ -48,14 +48,14 @@ const CompanyDetail = ({item, networkInfo}) => {
                     <section id="addresses" className="detailSection">
                         <h4 className="sectionLabel">Sitz, Niederlassung, Zweigniederlassungen</h4>
                         {item.attributes.main_branch && item.attributes.main_branch.data ? (
-                        <p id="main_branch">
+                        <p id="main_branch" className="my-2">
                             <span className="badge">Sitz</span>
                             <span>
                                 {item.attributes.main_branch.data.attributes.street} {item.attributes.main_branch.data.attributes.place_number}, {item.attributes.main_branch.data.attributes.zip} {item.attributes.main_branch.data.attributes.city}
                             </span>
                         </p>
                         ) : ''}
-                        <div id="branches">
+                        <div id="branches" className="my-2">
                             {item.attributes.branches && item.attributes.branches.data.map((branch) => (
                                     <p key={branch.id}>
                                         <span className="badge">Zweigniederlassung</span>
@@ -70,13 +70,13 @@ const CompanyDetail = ({item, networkInfo}) => {
                 {item.attributes.corp_object ? (
                     <section id="corp_object" className="detailSection">
                         <h4 className="sectionLabel">Unternehmensgegenstand</h4>
-                        <p>{item.attributes.corp_object}</p>
+                        <p className="my-2">{item.attributes.corp_object}</p>
                     </section>
                 ) : '' }
                 {item.attributes.networkCompanies.length > 0 || item.attributes.networkPersons.length > 0 ? (
                     <section id="network" className="detailSection">
                         <h4 className="sectionLabel">Netzwerk</h4>
-                        <div>
+                        <div className="my-2">
                             <NetworkList networkInfo={networkInfo} />
                         </div>
                     </section>
@@ -93,7 +93,7 @@ export async function getServerSideProps({params}) {
         `${process.env.NEXT_PUBLIC_STRAPI_URL}/slugify/slugs/company/${pageslug}?populate=*&_sort=furtherNames.name_upto:ASC`
     )
     const networkResponse = await fetcher(
-    `${process.env.NEXT_PUBLIC_STRAPI_URL}/slugify/slugs/company/${pageslug}?fields=hr_number&populate[networkCompanies][populate][connected_company][fields][0]=company_name&populate[networkPersons][populate][connected_person][fields][0]=first_name,sir_name`
+        `${process.env.NEXT_PUBLIC_STRAPI_URL}/slugify/slugs/company/${pageslug}?fields=company_name&populate[networkCompanies][populate][connected_company][fields][0]=company_name&populate[networkPersons][populate][connected_person][fields][0]=first_name,sir_name`
     )
     return{
         props: {

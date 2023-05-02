@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 const CompaniesList = ({content}) => {
     return (
-        <div className={style.listWrapper}>
+        <div>
             { content && content.data.map((item) => {
                 return (
                     <Link href={'/companies/'+item.attributes.hr_number} key={item.attributes.hr_number}>
