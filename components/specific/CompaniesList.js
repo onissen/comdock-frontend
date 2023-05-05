@@ -9,7 +9,7 @@ const CompaniesList = ({content}) => {
             { content && content.data.map((item) => {
                 return (
                     <Link href={'/companies/'+item.attributes.hr_number} key={item.attributes.hr_number}>
-                        <div className={`${style.listItem} ${style.listItemPrimary} rounded-lg`}>
+                        <div className={`${style.listItem} rounded-lg`}>
                             <div className={` ${style.listIcon} flex-none rounded-l-lg`}>
                                 <div className='w-5'>
                                     <FontAwesomeIcon icon={faBuilding} />
