@@ -113,8 +113,8 @@ export default function NetworkList({networkInfo}) {
             networkInfo.attributes.activeNetworkCompanies.length > numToShow || networkInfo.attributes.activeNetworkPersons.length,
             networkInfo.attributes.deletedNetworkCompanies.length > numToShow || networkInfo.attributes.deletedNetworkPersons.length
         ) && (
-            <button onClick={() => setShowFullNetwork(!ShowFullNetwork)}>
-                {ShowFullNetwork ? "Show Less" : "Show More"}
+            <button className={`${style.LenghtToggleButton} ${style.network} rounded`} onClick={() => setShowFullNetwork(!ShowFullNetwork)}>
+                {ShowFullNetwork ? "Netzwerk einklappen" : "Netzwerk ausklappen"}
             </button>
         )}
         </>  
