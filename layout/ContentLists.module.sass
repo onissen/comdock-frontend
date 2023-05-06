@@ -44,6 +44,20 @@
         
         .listIcon
             @apply bg-cyan-700
+    
+    &.deleted
+        @apply italic
+        @apply text-slate-400
+
+        &:hover
+            @apply bg-slate-300 text-gray-700
+            
+            .listIcon
+                @apply bg-slate-400
+            
+            .listIcon, .listContent .summary
+                @apply text-gray-700
+
 
 
 

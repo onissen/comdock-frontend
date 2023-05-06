@@ -1,14 +1,28 @@
-class DateUtils {
-    static getCurrentDate() {
-        const raw_date = new Date();
-        const day = ('0' + raw_date.getDate()).slice(-2); // add leading zero if needed
-        const month = ('0' + (raw_date.getMonth() + 1)).slice(-2); // add leading zero if needed
-        const year = raw_date.getFullYear();
-        const hours = ('0' + raw_date.getHours()).slice(-2); // add leading zero if needed
-        const minutes = ('0' + raw_date.getMinutes()).slice(-2); // add leading zero if needed
-        
-        return day + '.' + month + '.' + year + ' '+hours+':'+minutes;
-    }
+export function germanDate(dateString) {
+    // Convert date string to Date object
+    const date = new Date(dateString);
+
+    // Get day, month, and year from date object
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear().toString();
+
+    // Format date string as DD.MM.YYYY
+    const formattedDate = `${day}.${month}.${year}`;
+
+    // Return formatted date string
+    return formattedDate;
 }
 
-export {DateUtils};
+export function formatTime(timestring) {
+    const time = new Date(timestring);
+    const hour = time.getHours().toString().padStart(2, '0')
+    const minutes = time.getMinutes().toString().padStart(2, 0);
+
+    const formattedTime = `${hour}:${minutes}`;
+    return formattedTime;
+}
+
+const timestamp = new Date();
+export const currentDay = germanDate(timestamp);
+export const currentTime = formatTime(timestamp)

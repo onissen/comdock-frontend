@@ -3,11 +3,11 @@ import PageHeader from "../specific/PageHeader"
 import { faBuilding, faUser } from "@fortawesome/free-solid-svg-icons"
 import Link from "next/link"
 import { useEffect, useState } from "react"
-import { DateUtils } from "@/helpers/helpScripts"
+import { DateUtils, currentDay, currentTime } from "@/helpers/helpScripts"
 
 
 export default function DetailPage({title, children, contentType}) {
-    const now = DateUtils.getCurrentDate();
+    const now = currentDay+' '+currentTime
 
     const [activeLink, setActiveLink] = useState();
     

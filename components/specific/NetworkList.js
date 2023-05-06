@@ -1,3 +1,4 @@
+import { germanDate } from '@/helpers/helpScripts';
 import style from '@/layout/ContentLists.module.sass';
 import { faBuilding, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -79,7 +80,7 @@ export default function NetworkList({networkInfo}) {
                 {networkInfo.attributes.deletedNetworkPersons.map((person) => {
                     return (
                         <Link href={'/persons/'+person.connected_person.data.id} key={person.connected_person.data.id}>
-                        <div className={`${style.networkItem} rounded-lg`}>
+                        <div className={`${style.networkItem} ${style.deleted} rounded-lg`}>
                             <div className={` ${style.listIcon} flex-none rounded-l-lg`}>
                                 <div className={style.faIcon}>
                                     <FontAwesomeIcon icon={faUser} />
@@ -87,7 +88,9 @@ export default function NetworkList({networkInfo}) {
                             </div>
                             <div className={`${style.listContent} flex-auto`}>
                                 <p className={`${style.summary}`}>{person.connected_person.data.attributes.first_name} {person.connected_person.data.attributes.sir_name}</p>
-                                <p className={`${style.meta}`}>{person.connection_type}</p>
+                                <p className={`${style.meta}`}>
+                                    {person.connection_type} ({germanDate(person.since)} bis {germanDate(person.upto)})
+                                </p>
                             </div>
                         </div>
                     </Link>
