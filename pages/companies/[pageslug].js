@@ -6,6 +6,7 @@ import { fetcher } from "@/helpers/api";
 import { markdownToHtml } from "@/helpers/helpScripts";
 import { faArrowRightArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import PablicationSection from '@/components/specific/PublicationSection';
 
 const CompanyDetail = ({item, networkInfo, corp_object}) => {
     return(
@@ -83,6 +84,12 @@ const CompanyDetail = ({item, networkInfo, corp_object}) => {
                         </div>
                     </section>
                 ) : '' }
+                <section id="publications" className="detailSection">
+                    <h4 className="sectionLabel">Veröffentlichungen</h4>
+                    <div className="my-2">
+                        <PablicationSection />
+                    </div>
+                </section>
             </DetailPage>
         </Layout>
     )
