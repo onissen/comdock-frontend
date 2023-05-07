@@ -87,7 +87,7 @@ const CompanyDetail = ({item, networkInfo, corp_object}) => {
                 <section id="publications" className="detailSection">
                     <h4 className="sectionLabel">Veröffentlichungen</h4>
                     <div className="my-2">
-                        <PablicationSection />
+                        <PablicationSection hr={item.attributes.hr_pubs} />
                     </div>
                 </section>
             </DetailPage>
