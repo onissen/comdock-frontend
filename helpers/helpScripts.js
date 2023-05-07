@@ -1,3 +1,5 @@
+import { Remarkable } from 'remarkable';
+
 export function germanDate(dateString) {
     // Convert date string to Date object
     const date = new Date(dateString);
@@ -26,3 +28,18 @@ export function formatTime(timestring) {
 const timestamp = new Date();
 export const currentDay = germanDate(timestamp);
 export const currentTime = formatTime(timestamp)
+
+export async function markdownToHtml(markdown) {
+    const md = new Remarkable({
+        html: true,
+        breaks: true,
+        linkify: true,
+        typographer: true,
+        quotes: '“”‘’',
+    });
+
+    md.renderer.rules.underline_open = () => '<u>';
+    md.renderer.rules.underline_close = () => '</u>';
+
+    return md.render(markdown);
+}

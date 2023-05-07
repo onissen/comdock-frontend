@@ -1,11 +1,13 @@
+import style from '@/layout/ContentLists.module.sass';
 import Layout from "@/components/common/Layout"
 import DetailPage from "@/components/pagetypes/DetailPage";
 import NetworkList from "@/components/specific/NetworkList";
 import { fetcher } from "@/helpers/api";
+import { markdownToHtml } from "@/helpers/helpScripts";
 import { faArrowRightArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const CompanyDetail = ({item, networkInfo}) => {
+const CompanyDetail = ({item, networkInfo, corp_object}) => {
     return(
         <Layout siteTitle={item.attributes.company_name}>
             <DetailPage 
@@ -21,7 +23,7 @@ const CompanyDetail = ({item, networkInfo}) => {
                         {item.attributes.furtherNames &&
                           item.attributes.furtherNames.map((furtherName) => {
                             return (
-                                <div className="flex text-primary-400/50" key={furtherName.id}>
+                                <div className="flex text-cyan-500/50" key={furtherName.id}>
                                     <FontAwesomeIcon icon={faArrowRightArrowLeft} className="w-3 flex-none mr-2" />
                                     <span className="flex-auto text-sm">{furtherName.further_cname}</span>
                                 </div>
@@ -70,7 +72,7 @@ const CompanyDetail = ({item, networkInfo}) => {
                 {item.attributes.corp_object ? (
                     <section id="corp_object" className="detailSection">
                         <h4 className="sectionLabel">Unternehmensgegenstand</h4>
-                        <p className="my-2">{item.attributes.corp_object}</p>
+                        <div className={`my-2 markdownBox`} dangerouslySetInnerHTML={{ __html: corp_object }}></div>
                     </section>
                 ) : '' }
                 {item.attributes.networkCompanies.length > 0 || item.attributes.networkPersons.length > 0 ? (
@@ -95,6 +97,8 @@ export async function getServerSideProps({params}) {
     const networkResponse = await fetcher(
         `${process.env.NEXT_PUBLIC_STRAPI_URL}/slugify/slugs/company/${pageslug}?fields=company_name&populate[networkCompanies][populate][connected_company][fields][0]=hr_number,company_name&populate[networkPersons][populate][connected_person][fields][0]=id,first_name,sir_name`
     )
+
+    const corp_object = await markdownToHtml(contentResponse.data.attributes.corp_object);
     
     // Sort networkCompanies and networkPersons by their 'since' field
     networkResponse.data.attributes.networkCompanies.sort((oldest, newest) => {
@@ -114,6 +118,7 @@ export async function getServerSideProps({params}) {
     return{
         props: {
             item: contentResponse.data,
+            corp_object,
             networkInfo: {
                 ...networkResponse.data,
                 attributes: {
