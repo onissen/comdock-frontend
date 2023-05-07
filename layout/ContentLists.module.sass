@@ -1,8 +1,12 @@
-.listItem
+.listItem, .networkItem
     @apply flex justify-between gap-x-6 bg-slate-50 my-5 shadow
 
     .listIcon
-        @apply p-5 bg-slate-100
+        @apply bg-slate-100 p-5
+
+        .faIcon
+            width: 1.3rem
+            min-height: 1.73rem
 
     .listContent
         @apply my-auto
@@ -13,18 +17,56 @@
             @apply text-sm font-light
 
 .listItem
+    @apply text-primary
+
     &:hover
-        @apply text-zinc-100
+        @apply text-zinc-100 bg-primary
+
+        .listIcon
+            @apply bg-primary-600
 
         .listIcon, .listContent .summary
             @apply text-zinc-100
 
-.listItemPrimary
-    .listIcon, .listContent .summary
-        @apply text-primary
-    
+.networkItem
+    @apply text-cyan-600
     &:hover
-        @apply bg-primary
+        @apply text-zinc-100 bg-cyan-500
 
         .listIcon
-            @apply bg-primary-600
+            @apply bg-cyan-600
+
+        .listIcon, .listContent .summary
+            @apply text-zinc-100
+
+    &.headItem
+        @apply bg-cyan-600 text-zinc-100
+        
+        .listIcon
+            @apply bg-cyan-700
+    
+    &.deleted
+        @apply italic
+        @apply text-slate-400
+
+        &:hover
+            @apply bg-slate-300 text-gray-700
+            
+            .listIcon
+                @apply bg-slate-400
+            
+            .listIcon, .listContent .summary
+                @apply text-gray-700
+
+
+
+
+.networkTitle
+    @apply text-center p-2
+    @apply bg-cyan-600 text-zinc-100
+
+.LenghtToggleButton.network
+    @apply bg-slate-50 w-full p-2 text-cyan-600 shadow-sm text-xs
+
+    &:hover
+        @apply bg-cyan-600 text-zinc-100

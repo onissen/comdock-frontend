@@ -2,20 +2,21 @@
 
 import Head from "next/head";
 import Nav from "./Nav";
+import PageHeader from "../specific/PageHeader";
 
-export default function Layout ({children, siteTitle}) {
+export default function Layout ({children, siteTitle, nopageHeader}) {
     return (
         <>
             <Head>
                 <link rel="shortcut icon" href="/icons/icon-primary.svg" />
                 <title>
-                    {siteTitle ? (siteTitle+' | ') : ('')} COMDOCK Index
+                    {siteTitle ? (siteTitle+' | '+'COMDOCK Index') : ('COMDOCK Index')}
                 </title>
             </Head>
-            <Nav />
-            <main className="wrapper">
+            <Nav nopageHeader={nopageHeader} />
+            <main>
                 {children}
-            </main>
+            </main>            
             {/* TODO: Hier bitte Alert für #3 */}
         </>
     );

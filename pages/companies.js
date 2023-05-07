@@ -1,12 +1,15 @@
 import Layout from "@/components/common/Layout";
+import ListPage from "@/components/pagetypes/ListPage";
 import CompaniesList from "@/components/specific/CompaniesList";
 import { fetcher } from "@/helpers/api";
+
 
 const Companies = ({companies}) => {
     return(
         <Layout siteTitle="Firmen">
-          <h1>Firmen</h1>
-          <CompaniesList content={companies} />
+          <ListPage title="Firmen" >
+            <CompaniesList content={companies} />
+          </ListPage>
         </Layout>
     )
 }

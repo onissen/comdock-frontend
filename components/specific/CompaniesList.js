@@ -5,11 +5,11 @@ import Link from 'next/link';
 
 const CompaniesList = ({content}) => {
     return (
-        <div className={style.listWrapper}>
+        <div>
             { content && content.data.map((item) => {
                 return (
-                    <Link href={'/company/'+item.attributes.hr_number}>
-                        <div className={`${style.listItem} ${style.listItemPrimary} rounded-lg`}>
+                    <Link href={'/companies/'+item.attributes.hr_number} key={item.attributes.hr_number}>
+                        <div className={`${style.listItem} rounded-lg`}>
                             <div className={` ${style.listIcon} flex-none rounded-l-lg`}>
                                 <div className='w-5'>
                                     <FontAwesomeIcon icon={faBuilding} />
