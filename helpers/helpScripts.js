@@ -1,5 +1,9 @@
 import { Remarkable } from 'remarkable';
 
+import { faFile } from '@fortawesome/free-regular-svg-icons';
+import { faBuilding, faCircleMinus, faCirclePlus, faCodeBranch, faEllipsis, faGraduationCap, faUser } from '@fortawesome/free-solid-svg-icons';
+
+
 export function germanDate(dateString) {
     // Convert date string to Date object
     const date = new Date(dateString);
@@ -43,3 +47,19 @@ export async function markdownToHtml(markdown) {
 
     return md.render(markdown);
 }
+
+export function dynamicIconHandler(import_icon) {
+    const iconMap = {
+        'faEllipsis': faEllipsis,
+        'faGraduationCap': faGraduationCap,
+        'faUser': faUser,
+        'faCirclePlus': faCirclePlus,
+        'faBuilding': faBuilding,
+        'faFile': faFile,
+        'faCircleMinus': faCircleMinus,
+        'faCodeBranch': faCodeBranch,
+    };
+    const export_icon = iconMap[import_icon];
+    return export_icon
+}
+
