@@ -1,7 +1,6 @@
 import Breadcrumb from "@/components/specific/Breadcrumb";
 import BreadcrumbItem from "@/components/specific/BreadcrumbItem";
 import { useRouter } from "next/router";
-import style from "@/layout/Breadcrumbs.module.sass"
 import { useEffect, useState } from "react";
 
 
