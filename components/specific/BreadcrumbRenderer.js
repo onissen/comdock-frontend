@@ -1,11 +1,11 @@
-import "@/styles/globals.sass"
 import Breadcrumb from "@/components/specific/Breadcrumb";
 import BreadcrumbItem from "@/components/specific/BreadcrumbItem";
 import { useRouter } from "next/router";
+import style from "@/layout/Breadcrumbs.module.sass"
 import { useEffect, useState } from "react";
 
 
-function MyApp({ Component, pageProps }) {
+function BreadcrumbRenderer({current}) {
   const router = useRouter();
   const [breadcrumbs, setBreadcrumbs] = useState();
 
@@ -18,9 +18,20 @@ function MyApp({ Component, pageProps }) {
 
     const breadcrumbs = pathArray.map((path, index) => {
       const href = "/" + pathArray.slice(0, index + 1).join("/");
+      
+      let label;
+      
+      if (path == 'companies') {label = "Firmen"}
+      else if (path == 'persons') {label = "Personen"}
+      else if (path == 'hr') {label = "HR"}
+      else if (current) {label = current}
+      
+      else {label = path.charAt(0).toUpperCase() + path.slice(1);}
+
+
       return {
         href,
-        label: path.charAt(0).toUpperCase() + path.slice(1),
+        label,
       };
     });
 
@@ -28,7 +39,6 @@ function MyApp({ Component, pageProps }) {
   }, [router.asPath]);
 
   return (
-    <>
       <Breadcrumb>
         <BreadcrumbItem href="/">Home</BreadcrumbItem>
         {breadcrumbs &&
@@ -38,9 +48,7 @@ function MyApp({ Component, pageProps }) {
             </BreadcrumbItem>
           ))}
       </Breadcrumb>
-      <Component {...pageProps} />
-    </>
   );
 }
 
-export default MyApp;
+export default BreadcrumbRenderer;

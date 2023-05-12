@@ -1,4 +1,5 @@
 import { Children, Fragment } from "react";
+import style from "@/layout/Breadcrumbs.module.sass"
 
 
 const Breadcrumb = ({ children }) => {
@@ -11,7 +12,7 @@ const Breadcrumb = ({ children }) => {
       return (
         <Fragment key={index}>
           {child}
-          <span>/</span>
+          <span className={style.breadcrumbSeperator}>/</span>
         </Fragment>
       );
     }
@@ -20,7 +21,9 @@ const Breadcrumb = ({ children }) => {
 
   return (
     <nav>
-      <ol className="flex items-center space-x-4">{childrenWtihSeperator}</ol>
+      <ol className={style.breadcrumb}>
+        {childrenWtihSeperator}
+      </ol>
     </nav>
   );
 };
