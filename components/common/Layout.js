@@ -2,7 +2,8 @@
 
 import Head from "next/head";
 import Nav from "./Nav";
-import PageHeader from "../specific/PageHeader";
+import BreadcrumbRenderer from "../specific/BreadcrumbRenderer";
+
 
 export default function Layout ({children, siteTitle, nopageHeader}) {
     return (

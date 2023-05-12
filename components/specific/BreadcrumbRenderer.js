@@ -1,0 +1,54 @@
+import Breadcrumb from "@/components/specific/Breadcrumb";
+import BreadcrumbItem from "@/components/specific/BreadcrumbItem";
+import { useRouter } from "next/router";
+import style from "@/layout/Breadcrumbs.module.sass"
+import { useEffect, useState } from "react";
+
+
+function BreadcrumbRenderer({current}) {
+  const router = useRouter();
+  const [breadcrumbs, setBreadcrumbs] = useState();
+
+  useEffect(() => {
+    const pathWithoutQuery = router.asPath.split("?")[0];
+    let pathArray = pathWithoutQuery.split("/");
+    pathArray.shift();
+
+    pathArray = pathArray.filter((path) => path !== "");
+
+    const breadcrumbs = pathArray.map((path, index) => {
+      const href = "/" + pathArray.slice(0, index + 1).join("/");
+      
+      let label;
+      
+      if (path == 'companies') {label = "Firmen"}
+      else if (path == 'persons') {label = "Personen"}
+      else if (path == 'hr') {label = "HR"}
+      else if (current) {label = current}
+      
+      else {label = path.charAt(0).toUpperCase() + path.slice(1);}
+
+
+      return {
+        href,
+        label,
+      };
+    });
+
+    setBreadcrumbs(breadcrumbs);
+  }, [router.asPath]);
+
+  return (
+      <Breadcrumb>
+        <BreadcrumbItem href="/">Home</BreadcrumbItem>
+        {breadcrumbs &&
+          breadcrumbs.map((breadcrumb) => (
+            <BreadcrumbItem key={breadcrumb.href} href={breadcrumb.href}>
+              {breadcrumb.label}
+            </BreadcrumbItem>
+          ))}
+      </Breadcrumb>
+  );
+}
+
+export default BreadcrumbRenderer;
