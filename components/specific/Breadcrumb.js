@@ -19,7 +19,7 @@ const Breadcrumb = ({ children }) => {
   });
 
   return (
-    <nav >
+    <nav>
       <ol className="flex items-center space-x-4">{childrenWtihSeperator}</ol>
     </nav>
   );
