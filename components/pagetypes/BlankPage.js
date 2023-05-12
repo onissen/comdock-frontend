@@ -1,6 +1,6 @@
 import PageHeader from "../specific/PageHeader";
 
-export default function ListPage({title, children}) {
+export default function BlankPage({title, children}) {
     return (
         <>
             <PageHeader>
