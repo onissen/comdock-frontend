@@ -22,7 +22,6 @@ function BreadcrumbRenderer({current}) {
       
       if (path == 'companies') {label = "Firmen"}
       else if (path == 'persons') {label = "Personen"}
-      else if (path == 'hr') {label = "HR"}
       else if (current) {label = current}
       
       else {label = path.charAt(0).toUpperCase() + path.slice(1);}
