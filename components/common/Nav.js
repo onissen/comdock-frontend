@@ -17,7 +17,8 @@ export default function Nav({nopageHeader}) {
   const updatedNavigation = navigation.map((item) => ({
     ...item,
     current: item.href === router.pathname ||
-    (router.pathname.startsWith("/companies") && item.href === "/companies"),
+    (router.pathname.startsWith("/companies") && item.href === "/companies") ||
+    (router.pathname.startsWith("/persons") && item.href === "/persons")
   }));
   return (
     <Disclosure as="nav" className={`bg-primary-600 ${nopageHeader ? 'rounded-b-lg' : ''}`}>
