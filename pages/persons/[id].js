@@ -19,7 +19,7 @@ const PersonDetail = ({item}) => {
                     {item.attributes.personNetwork.map((person) => {
                         return (
                             <Link href="#" key={person.id}>
-                                <div className={`${style.networkItem} ${person.upto ? (style.deleted) : ''} rounded-lg`}>
+                                <div className={`${style.listItem} ${person.upto ? (style.deleted) : ''} rounded-lg`}>
                                     <div className={`${style.listIcon} flex-none rounded-l-lg`}>
                                     <div className={style.faIcon}>
                                         <FontAwesomeIcon icon={faBuilding} />
