@@ -37,18 +37,18 @@ export default function NetworkList({networkInfo}) {
                 {networkInfo.attributes.activeNetworkCompanies.slice(0, numToShow).map((company) => {
                     return (
                         <Link href={'/companies/'+company.connected_company.data.attributes.hr_number} key={company.connected_company.data.attributes.hr_number}>
-                        <div className={`${style.networkItem} rounded-lg`}>
-                            <div className={` ${style.listIcon} flex-none rounded-l-lg`}>
-                                <div className={style.faIcon}>
-                                    <FontAwesomeIcon icon={faBuilding} />
+                            <div className={`${style.networkItem} rounded-lg`}>
+                                <div className={` ${style.listIcon} flex-none rounded-l-lg`}>
+                                    <div className={style.faIcon}>
+                                        <FontAwesomeIcon icon={faBuilding} />
+                                    </div>
+                                </div>
+                                <div className={`${style.listContent} flex-auto`}>
+                                    <p className={`${style.summary}`}>{company.connected_company.data.attributes.company_name}</p>
+                                    <p className={`${style.meta}`}>{company.connection_type}</p>
                                 </div>
                             </div>
-                            <div className={`${style.listContent} flex-auto`}>
-                                <p className={`${style.summary}`}>{company.connected_company.data.attributes.company_name}</p>
-                                <p className={`${style.meta}`}>{company.connection_type}</p>
-                            </div>
-                        </div>
-                    </Link>
+                        </Link>
                     )
                 })}
                 {ShowFullNetwork && networkInfo.attributes.deletedNetworkCompanies.map((company) => {
