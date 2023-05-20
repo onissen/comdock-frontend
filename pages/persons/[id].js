@@ -4,9 +4,8 @@ import { fetcher } from "@/helpers/api";
 import Link from "next/link";
 import style from '@/layout/ContentLists.module.sass';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBuilding } from "@fortawesome/free-solid-svg-icons";
+import { faBuilding, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { dynamicIconHandler, germanDate } from "@/helpers/helpScripts";
-import HRList from "@/components/specific/HRList";
 
 
 const PersonDetail = ({item}) => {
@@ -18,7 +17,7 @@ const PersonDetail = ({item}) => {
                     <div className="personNetwork">
                     {item.attributes.personNetwork.map((person) => {
                         return (
-                            <Link href="#" key={person.id}>
+                            <Link href={'/company/'+person.company.data.attributes.hr_number} key={person.id}>
                                 <div className={`${style.listItem} ${person.upto ? (style.deleted) : ''} rounded-lg`}>
                                     <div className={`${style.listIcon} flex-none rounded-l-lg`}>
                                     <div className={style.faIcon}>
@@ -31,6 +30,15 @@ const PersonDetail = ({item}) => {
                                         {person.connection_type} {person.upto ? ('(bis '+germanDate(person.upto)+')') : ''}
                                     </p>
                                     </div>
+                                    {person.hr_public.data?.id ? (
+                                        <div className={`${style.hrLink} flex-none`}>
+                                            <Link href={'/hr/'+person.hr_public.data.id}>
+                                                <div className='w-5'>
+                                                    <FontAwesomeIcon icon={faInfoCircle} />
+                                                </div>
+                                            </Link>
+                                        </div>
+                            ) : null}
                                 </div>
                             </Link>
                         );

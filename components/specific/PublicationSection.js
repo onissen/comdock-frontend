@@ -2,8 +2,20 @@ import { Fragment } from 'react'
 import { Tab } from '@headlessui/react'
 import style from '@/layout/TabNavs.module.sass';
 import HRList from './HRList';
+import { useRef } from 'react';
 
-  export default function PablicationSection({hr}) {
+export default function PablicationSection({hr}) {
+  
+  const tabRef = useRef(null);
+
+  const switchTabAndScrollToHR = (tabIndex, hrId) => {
+    tabRef.current.setSelectedTab(tabIndex);
+    const hrElement = document.getElementById(hrId);
+    if (hrElement) {
+      hrElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+  
   return (
     <div className="w-full">
     <Tab.Group>
