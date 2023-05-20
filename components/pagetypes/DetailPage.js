@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import PageHeader from "../specific/PageHeader"
 import { faBuilding, faUser } from "@fortawesome/free-solid-svg-icons"
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { currentDay, currentTime } from "@/helpers/helpScripts"
 
 
@@ -50,20 +50,20 @@ export default function DetailPage({title, children, contentType}) {
                 <aside className="tableOfContent lg:block hidden">
                     <div className="sectionsList">
                         <ul>
-                            {children.map(child => {
-                                if (child.type == 'section') {
+                            {React.Children.toArray(children).map(child => {
+                                if (child.type == 'section' && child.props.className === 'detailSection') {
                                     return (
                                         <li key={child.props.id}>
                                             <Link href={`#${child.props.id}`} className={`toc-item rounded-r ${activeLink === child.props.id ? 'active' : ''}`}>
-                                                {child.props.children[0].props.children}
+                                                {Array.isArray(child.props.children) ? child.props.children[0].props.children : child.props.children.props.children}
                                             </Link>
                                         </li>
                                     );
                                 };
                             })}
                         </ul>
-                        <p className="toc-text">Abruf vom {now}</p>
                     </div>
+                    <p className="toc-text">Abruf vom {now}</p>
                 </aside>
                 <article className="wrapper">
                     {children}
