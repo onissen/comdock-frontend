@@ -7,6 +7,7 @@ import { markdownToHtml } from "@/helpers/helpScripts";
 import { faArrowRightArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PablicationSection from '@/components/specific/PublicationSection';
+import Link from 'next/link';
 
 const CompanyDetail = ({item, networkInfo, corp_object}) => {
     return(
@@ -20,6 +21,7 @@ const CompanyDetail = ({item, networkInfo, corp_object}) => {
                 <section id="company_name" className="detailSection">
                     <h4 className="sectionLabel">Firma</h4>
                     <p className="my-2">{item.attributes.company_name}</p>
+                    <Link href="#hr5">Test Link HR#5</Link>
                     <div id="furtherNames" className="my-2">
                         {item.attributes.furtherNames &&
                           item.attributes.furtherNames.map((furtherName) => {
@@ -102,7 +104,7 @@ export async function getServerSideProps({params}) {
     `${process.env.NEXT_PUBLIC_STRAPI_URL}/slugify/slugs/company/${pageslug}?populate=*&_sort=furtherNames.name_upto:ASC`
     )
     const networkResponse = await fetcher(
-        `${process.env.NEXT_PUBLIC_STRAPI_URL}/slugify/slugs/company/${pageslug}?fields=company_name&populate[networkCompanies][populate][connected_company][fields][0]=hr_number,company_name&populate[networkPersons][populate][connected_person][fields][0]=id,first_name,sir_name`
+`${process.env.NEXT_PUBLIC_STRAPI_URL}/slugify/slugs/company/${pageslug}?fields=company_name&populate[networkCompanies][populate][connected_company][fields][0]=hr_number,company_name&populate[networkPersons][populate][connected_person][fields][0]=id,first_name,sir_name&populate[networkCompanies][populate][hr_public][fields][0]=id&populate[networkPersons][populate][hr_public][fields][0]=id`
     )
 
     const corp_object = await markdownToHtml(contentResponse.data.attributes.corp_object);

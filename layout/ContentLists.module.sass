@@ -15,6 +15,11 @@
             @apply font-semibold
         .meta
             @apply text-sm font-light
+    
+    .hrLink
+        @apply my-auto mx-5
+        @apply text-zinc-300
+
 
 .listItem
     @apply text-primary
@@ -38,6 +43,12 @@
 
         .listIcon, .listContent .summary
             @apply text-zinc-100
+
+        .hrLink
+            @apply text-cyan-700
+        
+            &:hover
+                @apply text-cyan-800
 
     &.headItem
         @apply bg-cyan-600 text-zinc-100

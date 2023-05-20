@@ -1,6 +1,6 @@
 import { germanDate } from '@/helpers/helpScripts';
 import style from '@/layout/ContentLists.module.sass';
-import { faBuilding, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faBuilding, faInfo, faInfoCircle, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -12,10 +12,6 @@ export default function NetworkList({networkInfo}) {
         networkInfo.attributes.activeNetworkCompanies.length,
         networkInfo.attributes.activeNetworkPersons.length
       ) : 3;
-
-    const handleShowMore = () => {
-        setShowFullNetwork(!ShowFullNetwork);
-    };
 
     return (
         <>
@@ -47,6 +43,15 @@ export default function NetworkList({networkInfo}) {
                                     <p className={`${style.summary}`}>{company.connected_company.data.attributes.company_name}</p>
                                     <p className={`${style.meta}`}>{company.connection_type}</p>
                                 </div>
+                                {company.hr_public.data?.id ? (
+                                    <div className={`${style.hrLink} flex-none`}>
+                                        <Link href={'/hr/'+company.hr_public.data.id}>
+                                            <div className='w-5'>
+                                                <FontAwesomeIcon icon={faInfoCircle} />
+                                            </div>
+                                        </Link>
+                                    </div>
+                                ) : null}
                             </div>
                         </Link>
                     )
@@ -64,6 +69,15 @@ export default function NetworkList({networkInfo}) {
                                 <p className={`${style.summary}`}>{company.connected_company.data.attributes.company_name}</p>
                                 <p className={`${style.meta}`}>{company.connection_type} ({germanDate(company.since)} bis {germanDate(company.upto)})</p>
                             </div>
+                            {company.hr_public.data?.id ? (
+                                <div className={`${style.hrLink} flex-none`}>
+                                    <Link href={'/hr/'+company.hr_public.data.id}>
+                                        <div className='w-5'>
+                                            <FontAwesomeIcon icon={faInfoCircle} />
+                                        </div>
+                                    </Link>
+                                </div>
+                            ) : null}
                         </div>
                     </Link>
                     )
@@ -84,6 +98,15 @@ export default function NetworkList({networkInfo}) {
                                 <p className={`${style.summary}`}>{person.connected_person.data.attributes.first_name} {person.connected_person.data.attributes.sir_name}</p>
                                 <p className={`${style.meta}`}>{person.connection_type}</p>
                             </div>
+                            {person.hr_public.data?.id ? (
+                                <div className={`${style.hrLink} flex-none`}>
+                                    <Link href={'/hr/'+person.hr_public.data.id}>
+                                        <div className='w-5'>
+                                            <FontAwesomeIcon icon={faInfoCircle} />
+                                        </div>
+                                    </Link>
+                                </div>
+                            ) : null}
                         </div>
                     </Link>
                     )
@@ -103,6 +126,15 @@ export default function NetworkList({networkInfo}) {
                                     {person.connection_type} ({germanDate(person.since)} bis {germanDate(person.upto)})
                                 </p>
                             </div>
+                            {person.hr_public.data?.id ? (
+                                <div className={`${style.hrLink} flex-none`}>
+                                    <Link href={'/hr/'+person.hr_public.data.id}>
+                                        <div className='w-5'>
+                                            <FontAwesomeIcon icon={faInfoCircle} />
+                                        </div>
+                                    </Link>
+                                </div>
+                            ) : null}
                         </div>
                     </Link>
                     )
