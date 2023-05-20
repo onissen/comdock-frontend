@@ -17,7 +17,7 @@ const PersonDetail = ({item}) => {
                     <div className="personNetwork">
                     {item.attributes.personNetwork.map((person) => {
                         return (
-                            <Link href="#" key={person.id}>
+                            <Link href={'/company/'+person.company.data.attributes.hr_number} key={person.id}>
                                 <div className={`${style.listItem} ${person.upto ? (style.deleted) : ''} rounded-lg`}>
                                     <div className={`${style.listIcon} flex-none rounded-l-lg`}>
                                     <div className={style.faIcon}>
