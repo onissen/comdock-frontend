@@ -15,7 +15,9 @@ const PersonDetail = ({item}) => {
                 <section id="network" className="detailSection">
                     <h4 className="sectionLabel">Positionen</h4>
                     <div className="personNetwork">
-                    {item.attributes.personNetwork.map((person) => {
+                    {item.attributes.personNetwork
+                        .sort((a, b) => new Date(b.since) - new Date(a.since))
+                        .map((person) => {
                         return (
                             <Link href={'/company/'+person.company.data.attributes.hr_number} key={person.id}>
                                 <div className={`${style.listItem} ${person.upto ? (style.deleted) : ''} rounded-lg`}>
@@ -47,7 +49,6 @@ const PersonDetail = ({item}) => {
                 </section>
                 <section id="publics" className="detailSection">
                     <h4 className="sectionLabel">Publikationen</h4>
-                    {/* TODO #21 */}
                     <div>
                     {item.attributes.personNetwork && item.attributes.personNetwork
                         .reduce((uniqueItems, hr_item) => {
