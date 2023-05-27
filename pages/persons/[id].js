@@ -15,36 +15,36 @@ const PersonDetail = ({item}) => {
                 <section id="network" className="detailSection">
                     <h4 className="sectionLabel">Positionen</h4>
                     <div className="personNetwork">
-                    {item.attributes.personNetwork
-                        .sort((a, b) => new Date(b.since) - new Date(a.since))
-                        .map((person) => {
-                        return (
-                            <Link href={'/company/'+person.company.data.attributes.hr_number} key={person.id}>
+                        {item.attributes.personNetwork
+                            .sort((a, b) => new Date(b.since) - new Date(a.since))
+                            .map((person) => {
+                            return (
                                 <div className={`${style.listItem} ${person.upto ? (style.deleted) : ''} rounded-lg`}>
                                     <div className={`${style.listIcon} flex-none rounded-l-lg`}>
-                                    <div className={style.faIcon}>
-                                        <FontAwesomeIcon icon={faBuilding} />
-                                    </div>
+                                        <div className={style.faIcon}>
+                                            <FontAwesomeIcon icon={faBuilding} />
+                                        </div>
                                     </div>
                                     <div className={`${style.listContent} flex-auto`}>
-                                    <p className={`${style.summary}`}>{person.company.data.attributes.company_name}</p>
-                                    <p className={`${style.meta}`}>
-                                        {person.connection_type} {person.upto ? ('(bis '+germanDate(person.upto)+')') : ''}
-                                    </p>
+                                        <Link href={'/company/'+person.company.data.attributes.hr_number} key={person.id}>
+                                            <p className={`${style.summary}`}>{person.company.data.attributes.company_name}</p>
+                                            <p className={`${style.meta}`}>
+                                                {person.connection_type} {person.upto ? ('(bis '+germanDate(person.upto)+')') : ''}
+                                            </p>
+                                        </Link>
                                     </div>
-                                    {person.hr_public.data?.id ? (
+                                    {person.hr_public.data?.id && (
                                         <div className={`${style.hrLink} flex-none`}>
-                                            <Link href={'/hr/'+person.hr_public.data.id}>
+                                            <Link href={'/hr/' + person.hr_public.data.id}>
                                                 <div className='w-5'>
                                                     <FontAwesomeIcon icon={faInfoCircle} />
                                                 </div>
                                             </Link>
                                         </div>
-                            ) : null}
+                                    )}
                                 </div>
-                            </Link>
-                        );
-                    })}
+                            );
+                        })}
                     </div>
                 </section>
                 <section id="publics" className="detailSection">
