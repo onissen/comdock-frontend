@@ -1,21 +1,38 @@
 import Layout from "@/components/common/Layout";
+import { ConnectionFailOnSite } from "@/components/errors/ConnectionFailOnSite";
 import BlankPage from "@/components/pagetypes/BlankPage";
 import CompaniesList from "@/components/specific/CompaniesList";
 import { fetcher } from "@/helpers/api";
+import { useEffect} from "react";
 
 
 const Companies = ({companies}) => {
-    return(
-        <Layout siteTitle="Firmen">
-          <BlankPage title="Firmen" >
+
+  useEffect(() => {
+    if (!companies) {
+      setTimeout(() => {
+        window.location.reload();
+      }, 120000);
+    }
+  }, [companies]);
+
+  return (
+    <Layout siteTitle="Firmen">
+      <BlankPage title="Firmen">
+          {companies ? (
             <CompaniesList content={companies} />
-          </BlankPage>
-        </Layout>
-    )
-}
+            ) : (
+              <ConnectionFailOnSite />
+            )
+          }
+        </BlankPage>
+    </Layout>
+  );
+};
 export default Companies
 
 export async function getStaticProps() {
+  try {
     const contentResponse = await fetcher(
       `${process.env.NEXT_PUBLIC_STRAPI_URL}/companies?fields[0]=company_name&fields[1]=hr_court&fields[2]=hr_dept&fields[3]=hr_number&populate=main_branch`
     );
@@ -24,5 +41,11 @@ export async function getStaticProps() {
         companies: contentResponse,
       },
     };
+  } catch (error) {
+    return {
+      props: {
+        companies: null,
+      },
+    };
   }
-  
+}

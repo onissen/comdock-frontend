@@ -1,13 +1,26 @@
 import Layout from "@/components/common/Layout";
+import { ConnectionFailFullSite } from "@/components/errors/ConnectionFailFullSite";
 import PageHeader from "@/components/specific/PageHeader";
 import { fetcher } from "@/helpers/api";
 import { dynamicIconHandler, markdownToHtml } from "@/helpers/helpScripts";
-import { faBuilding } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
+import { useEffect } from "react";
 
 
-const HRDetail = ({item, pub_text}) => {    
+const HRDetail = ({item, pub_text}) => {
+    useEffect(() => {
+        if (!item) {
+            setTimeout(() => {
+            window.location.reload();
+            }, 120000);
+        }
+    }, [item]);
+    
+    if (!item) {
+        return(<ConnectionFailFullSite />)
+    }
+
     return (
         <Layout siteTitle={item.attributes.pub_title+' - '+item.attributes.company.data.attributes.company_name}>
             <PageHeader noBreadcrumb>
@@ -28,16 +41,22 @@ const HRDetail = ({item, pub_text}) => {
 
 export async function getServerSideProps({params}) {
     const {id} = params;
-    const contentResponse = await fetcher(
-        `${process.env.NEXT_PUBLIC_STRAPI_URL}/hr-publics/${id}?populate[company][fields][0]=company_name,hr_dept,hr_number`
-    )
+    try {
+        const contentResponse = await fetcher(
+            `${process.env.NEXT_PUBLIC_STRAPI_URL}/hr-publics/${id}?populate[company][fields][0]=company_name,hr_dept,hr_number`
+        )
 
-    const pub_text = await markdownToHtml(contentResponse.data.attributes.pub_text);
+        const pub_text = await markdownToHtml(contentResponse.data.attributes.pub_text);
 
-    return {
-        props:{
-            item: contentResponse.data,
-            pub_text
+        return {
+            props:{
+                item: contentResponse.data,
+                pub_text
+            }
+        }
+    } catch (error) {
+        return{
+            props: {item: null}
         }
     }
 }
