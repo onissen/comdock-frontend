@@ -3,11 +3,10 @@ import PageHeader from "../specific/PageHeader"
 import { faBuilding, faUser } from "@fortawesome/free-solid-svg-icons"
 import Link from "next/link"
 import React, { useEffect, useState } from "react"
-import { currentDay, currentTime } from "@/helpers/helpScripts"
+import { Now } from "@/helpers/helpScripts"
 
 
 export default function DetailPage({title, children, contentType}) {
-    const now = currentDay+' '+currentTime
 
     const [activeLink, setActiveLink] = useState();
     
@@ -62,8 +61,8 @@ export default function DetailPage({title, children, contentType}) {
                                 };
                             })}
                         </ul>
+                        <p className="toc-text">Abruf vom <Now /></p>
                     </div>
-                    <p className="toc-text">Abruf vom {now}</p>
                 </aside>
                 <article className="wrapper">
                     {children}
