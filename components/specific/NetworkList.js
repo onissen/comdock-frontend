@@ -15,33 +15,32 @@ export default function NetworkList({networkInfo}) {
 
     return (
         <>
-        <Link href={'#'}>
-            <div className={`${style.networkItem} ${style.headItem} rounded-lg`}>
-                <div className={` ${style.listIcon} flex-none rounded-l-lg`}>
-                    <div className='w-5'>
-                        <FontAwesomeIcon icon={faBuilding} />
-                    </div>
-                </div>
-                <div className={`${style.listContent} flex-auto`}>
-                    <p className={`${style.summary}`}>{networkInfo.attributes.company_name}</p>
+        <div className={`${style.networkItem} ${style.headItem} rounded-lg`}>
+            <div className={` ${style.listIcon} flex-none rounded-l-lg`}>
+                <div className='w-5'>
+                    <FontAwesomeIcon icon={faBuilding} />
                 </div>
             </div>
-        </Link>
+            <div className={`${style.listContent} flex-auto`}>
+                <p className={`${style.summary}`}>{networkInfo.attributes.company_name}</p>
+            </div>
+        </div>
         <div className="grid grid-cols-2 gap-4">
             <div id="networkCompanies">
                 <h6 className={`${style.networkTitle} rounded`}>Verbundene Unternehmen</h6>
                 {networkInfo.attributes.activeNetworkCompanies.slice(0, numToShow).map((company) => {
                     return (
-                        <Link href={'/companies/'+company.connected_company.data.attributes.hr_number} key={company.connected_company.data.attributes.hr_number}>
-                            <div className={`${style.networkItem} rounded-lg`}>
+                        <div className={`${style.networkItem} rounded-lg`}>
                                 <div className={` ${style.listIcon} flex-none rounded-l-lg`}>
                                     <div className={style.faIcon}>
                                         <FontAwesomeIcon icon={faBuilding} />
                                     </div>
                                 </div>
                                 <div className={`${style.listContent} flex-auto`}>
+                                <Link href={'/companies/'+company.connected_company.data.attributes.hr_number} key={company.connected_company.data.attributes.hr_number}>
                                     <p className={`${style.summary}`}>{company.connected_company.data.attributes.company_name}</p>
                                     <p className={`${style.meta}`}>{company.connection_type}</p>
+                                </Link>
                                 </div>
                                 {company.hr_public.data?.id ? (
                                     <div className={`${style.hrLink} flex-none`}>
@@ -53,7 +52,6 @@ export default function NetworkList({networkInfo}) {
                                     </div>
                                 ) : null}
                             </div>
-                        </Link>
                     )
                 })}
                 {ShowFullNetwork && networkInfo.attributes.deletedNetworkCompanies.map((company) => {
@@ -134,7 +132,7 @@ export default function NetworkList({networkInfo}) {
                                         </div>
                                     </Link>
                                 </div>
-                            ) : null}
+                            ) : ''}
                         </div>
                     </Link>
                     )
