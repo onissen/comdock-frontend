@@ -1,7 +1,7 @@
 import { Remarkable } from 'remarkable';
-
 import { faFile } from '@fortawesome/free-regular-svg-icons';
 import { faBuilding, faCircleMinus, faCirclePlus, faCodeBranch, faEllipsis, faGraduationCap, faUser } from '@fortawesome/free-solid-svg-icons';
+import { useEffect, useState } from 'react';
 
 
 export function germanDate(dateString) {
@@ -20,18 +20,31 @@ export function germanDate(dateString) {
     return formattedDate;
 }
 
-export function formatTime(timestring) {
-    const time = new Date(timestring);
-    const hour = time.getHours().toString().padStart(2, '0')
-    const minutes = time.getMinutes().toString().padStart(2, 0);
+export const Now = () => {
+    const [now, setNow] = useState('');
+  
+    useEffect(() => {
+      const updateTimestamp = () => {
+        const timestamp = new Date();
+        const formatOptions = {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        }
+        const localTimestamp = timestamp.toLocaleString('de-DE', formatOptions);
+        setNow(localTimestamp);
+      };
+  
+      updateTimestamp(); // Update on component mount
+  
+    }, []);
+  
+    return now;
+  };
+  
 
-    const formattedTime = `${hour}:${minutes}`;
-    return formattedTime;
-}
-
-const timestamp = new Date();
-export const currentDay = germanDate(timestamp);
-export const currentTime = formatTime(timestamp)
 
 export async function markdownToHtml(markdown) {
     const md = new Remarkable({

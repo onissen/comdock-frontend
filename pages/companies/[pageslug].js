@@ -21,7 +21,6 @@ const CompanyDetail = ({item, networkInfo, corp_object}) => {
                 <section id="company_name" className="detailSection">
                     <h4 className="sectionLabel">Firma</h4>
                     <p className="my-2">{item.attributes.company_name}</p>
-                    <Link href="#hr5">Test Link HR#5</Link>
                     <div id="furtherNames" className="my-2">
                         {item.attributes.furtherNames &&
                           item.attributes.furtherNames.map((furtherName) => {
