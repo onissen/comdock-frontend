@@ -38,10 +38,12 @@ export default function DetailPage({title, children, contentType}) {
         <>
             <PageHeader title={title}>
                 <div className="h1 flex">
+                    { contentType && (
                     <div className="flex-none w-8 mr-6">
                         {contentType == 'company' ? (<FontAwesomeIcon icon={faBuilding} />) : ''}
                         {contentType == 'person' ? (<FontAwesomeIcon icon={faUser} />) : ''}
                     </div>
+                    )}
                     <span>{title}</span>
                 </div>
             </PageHeader>

@@ -1,21 +1,36 @@
 import Layout from "@/components/common/Layout";
+import { ConnectionFailOnSite } from "@/components/errors/ConnectionFailOnSite";
 import BlankPage from "@/components/pagetypes/BlankPage";
 import PersonsList from "@/components/specific/PersonsList";
 import { fetcher } from "@/helpers/api";
+import { useEffect } from "react";
 
 
-const Companies = ({persons}) => {
-    return(
-        <Layout siteTitle="Personen">
-          <BlankPage title="Personen" >
-            <PersonsList content={persons} />
-          </BlankPage>
-        </Layout>
-    )
+const Persons = ({persons}) => {
+  useEffect(() => {
+    if (!persons) {
+      setTimeout(() => {
+        window.location.reload();
+      }, 120000);
+    }
+  }, [persons]);
+
+  return(
+      <Layout siteTitle="Personen">
+        <BlankPage title="Personen" >
+          {persons ? (
+          <PersonsList content={persons} />
+          ) : (
+            <ConnectionFailOnSite />
+          )}
+        </BlankPage>
+      </Layout>
+  )
 }
-export default Companies
+export default Persons
 
 export async function getStaticProps() {
+  try {
     const contentResponse = await fetcher(
       `${process.env.NEXT_PUBLIC_STRAPI_URL}/persons?fields[0]=first_name&fields[1]=sir_name&fields[2]=city`
     );
@@ -24,5 +39,12 @@ export async function getStaticProps() {
         persons: contentResponse,
       },
     };
+  } catch(error) {
+    return {
+      props: {
+        persons: null
+      },
+    };
   }
+}
   

@@ -6,9 +6,24 @@ import style from '@/layout/ContentLists.module.sass';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBuilding, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { dynamicIconHandler, germanDate } from "@/helpers/helpScripts";
+import { useEffect } from "react";
+import { ConnectionFailFullSite } from "@/components/errors/ConnectionFailFullSite";
 
 
 const PersonDetail = ({item}) => {
+    useEffect(() => {
+        if (!item) {
+            setTimeout(() => {
+            window.location.reload();
+            }, 120000);
+        }
+    }, [item]);
+    
+    if (!item) {
+        return(<ConnectionFailFullSite />)
+    }
+
+
     return (
         <Layout siteTitle={item.attributes.first_name+' '+item.attributes.sir_name+', '+item.attributes.city}>
             <DetailPage title={item.attributes.first_name+' '+item.attributes.sir_name+', '+item.attributes.city} contentType='person'>
@@ -83,15 +98,21 @@ const PersonDetail = ({item}) => {
 
 export async function getServerSideProps({params}) {
     const {id} = params;
-    const contentResponse = await fetcher(
-      `${process.env.NEXT_PUBLIC_STRAPI_URL}/persons/${id}?populate[personNetwork][populate][company][fields][0]=hr_number,company_name&populate[personNetwork][populate][hr_public][fields][0]=pub_date,pub_title,pub_summary,pub_icon`
-    );
-    return {
-      props: {
-        item: contentResponse.data,
-      },
-    };
-  }
+    try{
+        const contentResponse = await fetcher(
+        `${process.env.NEXT_PUBLIC_STRAPI_URL}/persons/${id}?populate[personNetwork][populate][company][fields][0]=hr_number,company_name&populate[personNetwork][populate][hr_public][fields][0]=pub_date,pub_title,pub_summary,pub_icon`
+        );
+        return {
+            props: {
+                item: contentResponse.data,
+            },
+        };
+    } catch (error) {
+        return {
+            props: {item: null},
+        };
+    }
+}
 
 
 export default PersonDetail;
