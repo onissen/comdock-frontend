@@ -101,7 +101,7 @@ const CompanyDetail = ({item, networkInfo, corp_object}) => {
                 <section id="publications" className="detailSection">
                     <h4 className="sectionLabel">Veröffentlichungen</h4>
                     <div className="my-2">
-                        <PablicationSection hr={item.attributes.hr_pubs} />
+                        <PablicationSection hr={item.attributes.hr_pubs} docs={item.attributes.docs} />
                     </div>
                 </section>
             </DetailPage>
