@@ -50,7 +50,6 @@ export async function markdownToHtml(markdown) {
     const md = new Remarkable({
         html: true,
         breaks: true,
-        linkify: true,
         typographer: true,
         quotes: '“”‘’',
     });
