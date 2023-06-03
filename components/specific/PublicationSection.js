@@ -41,7 +41,7 @@ export default function PablicationSection({hr, docs}) {
         <Tab.Panel id="hr_pubs" className="p-3">
             <HRList content={hr} />
         </Tab.Panel>
-        <Tab.Panel id="hr_pubs" className="p-3">
+        <Tab.Panel id="company_docs" className="p-3">
             <DocList content={docs} />
         </Tab.Panel>
         {/* Just Copy/Paste <Tab.Panel> to get more tab panels */}
