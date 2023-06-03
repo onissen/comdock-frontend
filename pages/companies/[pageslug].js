@@ -101,7 +101,7 @@ const CompanyDetail = ({item, networkInfo, corp_object}) => {
                 <section id="publications" className="detailSection">
                     <h4 className="sectionLabel">Veröffentlichungen</h4>
                     <div className="my-2">
-                        <PablicationSection hr={item.attributes.hr_pubs} />
+                        <PablicationSection hr={item.attributes.hr_pubs} docs={networkInfo.attributes.docs} />
                     </div>
                 </section>
             </DetailPage>
@@ -117,7 +117,7 @@ export async function getServerSideProps({params}) {
         `${process.env.NEXT_PUBLIC_STRAPI_URL}/slugify/slugs/company/${pageslug}?populate=*&_sort=furtherNames.name_upto:ASC`
         )
         const networkResponse = await fetcher(
-    `${process.env.NEXT_PUBLIC_STRAPI_URL}/slugify/slugs/company/${pageslug}?fields=company_name&populate[networkCompanies][populate][connected_company][fields][0]=hr_number,company_name&populate[networkPersons][populate][connected_person][fields][0]=id,first_name,sir_name&populate[networkCompanies][populate][hr_public][fields][0]=id&populate[networkPersons][populate][hr_public][fields][0]=id`
+    `${process.env.NEXT_PUBLIC_STRAPI_URL}/slugify/slugs/company/${pageslug}?fields=company_name&populate[networkCompanies][populate][connected_company][fields][0]=hr_number,company_name&populate[networkPersons][populate][connected_person][fields][0]=id,first_name,sir_name&populate[networkCompanies][populate][hr_public][fields][0]=id&populate[networkPersons][populate][hr_public][fields][0]=id&populate[docs][populate][document][fields][0]=url&populate[docs][populate][certificate][fields][0]=url&populate[docs][populate][user][fields][0]=name`
         )
 
         const corp_object = await markdownToHtml(contentResponse.data.attributes.corp_object);
