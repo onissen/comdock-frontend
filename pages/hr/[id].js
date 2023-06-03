@@ -3,11 +3,10 @@ import { ConnectionFailFullSite } from "@/components/errors/ConnectionFailFullSi
 import DocList from "@/components/specific/DocList";
 import PageHeader from "@/components/specific/PageHeader";
 import { fetcher } from "@/helpers/api";
-import { dynamicIconHandler, markdownToHtml } from "@/helpers/helpScripts";
+import { dynamicIconHandler, germanDate, markdownToHtml } from "@/helpers/helpScripts";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { useEffect } from "react";
-
 
 const HRDetail = ({item, pub_text}) => {
     useEffect(() => {
@@ -33,7 +32,10 @@ const HRDetail = ({item, pub_text}) => {
                 </div>
             </PageHeader>
             <article className="wrapper text-mono">
-                <Link href={`/companies/${item.attributes.company.data.attributes.hr_number}`} className="font-semibold text-primary hover:underline hover:underline-offset-4">{item.attributes.company.data.attributes.hr_dept+' '+item.attributes.company.data.attributes.hr_number+' / '+item.attributes.company.data.attributes.company_name}</Link>
+                <div className="flex">
+                    <Link href={`/companies/${item.attributes.company.data.attributes.hr_number}`} className="flex-auto font-semibold text-primary hover:underline hover:underline-offset-4">{item.attributes.company.data.attributes.hr_dept+' '+item.attributes.company.data.attributes.hr_number+' / '+item.attributes.company.data.attributes.company_name}</Link>
+                    <span className="text-right font-semibold text-primary">{germanDate(item.attributes.pub_date)}</span>
+                </div>
                 <div className={`my-2 markdownBox text-mono`} dangerouslySetInnerHTML={{ __html: pub_text }}></div>
             </article>
             <section id="publications" className="wrapper">
