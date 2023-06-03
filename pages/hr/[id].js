@@ -1,5 +1,6 @@
 import Layout from "@/components/common/Layout";
 import { ConnectionFailFullSite } from "@/components/errors/ConnectionFailFullSite";
+import DocList from "@/components/specific/DocList";
 import PageHeader from "@/components/specific/PageHeader";
 import { fetcher } from "@/helpers/api";
 import { dynamicIconHandler, markdownToHtml } from "@/helpers/helpScripts";
@@ -35,6 +36,12 @@ const HRDetail = ({item, pub_text}) => {
                 <Link href={`/companies/${item.attributes.company.data.attributes.hr_number}`} className="font-semibold text-primary hover:underline hover:underline-offset-4">{item.attributes.company.data.attributes.hr_dept+' '+item.attributes.company.data.attributes.hr_number+' / '+item.attributes.company.data.attributes.company_name}</Link>
                 <div className={`my-2 markdownBox text-mono`} dangerouslySetInnerHTML={{ __html: pub_text }}></div>
             </article>
+            <section id="publications" className="wrapper">
+                <h4 className="sectionLabel">Dokumente zu dieser Eintragung</h4>
+                <div className="my-2">
+                    <DocList content={item.attributes.docs} />
+                </div>
+            </section>
         </Layout>
     )
 }
@@ -43,7 +50,7 @@ export async function getServerSideProps({params}) {
     const {id} = params;
     try {
         const contentResponse = await fetcher(
-            `${process.env.NEXT_PUBLIC_STRAPI_URL}/hr-publics/${id}?populate[company][fields][0]=company_name,hr_dept,hr_number`
+            `${process.env.NEXT_PUBLIC_STRAPI_URL}/hr-publics/${id}?populate[company][fields][0]=company_name,hr_dept,hr_number&populate[docs][populate][certificate][fields][0]=url&populate[docs][populate][document][fields][0]=url&populate[docs][populate][user][fields][0]=name`
         )
 
         const pub_text = await markdownToHtml(contentResponse.data.attributes.pub_text);

@@ -5,7 +5,6 @@ import { faCircleChevronDown, faFileSignature, faFile, faFileLines } from '@fort
 import { Disclosure } from '@headlessui/react';
 import { germanDate } from '@/helpers/helpScripts';
 import Link from 'next/link';
-import { Alert } from './Alerts';
 
 
 export default function DocList({content}) {
@@ -15,7 +14,7 @@ export default function DocList({content}) {
                 return(
                     <Disclosure key={item.id}>
                         {({ open }) => (
-                            <div className={open ? 'bg-sky-100/70 rounded-lg' : ''}>
+                            <div className={open ? 'bg-slate-100 rounded-lg' : ''}>
                                     <Disclosure.Button className={`${style.listItem} rounded-lg w-full text-left`} id={`doc${item.id}`}>
                                         <div className={` ${style.listIcon} flex-none rounded-l-lg`}>
                                             <div className="w-5">
