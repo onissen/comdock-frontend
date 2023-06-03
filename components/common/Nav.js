@@ -1,5 +1,6 @@
-import { Disclosure, Menu, Transition } from '@headlessui/react'
+import { Disclosure } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 const navigation = [
@@ -39,11 +40,9 @@ export default function Nav({nopageHeader}) {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
-                  <img
-                    className="block h-8 w-auto"
-                    src="/icons/icon-light.svg"
-                    alt="COMDOCK Index"
-                  />
+                  <Link href="/">
+                    <img className="block h-8 w-auto" src="/icons/icon-light.svg" alt="COMDOCK Index" />
+                  </Link>
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
