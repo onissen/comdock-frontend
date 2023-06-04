@@ -113,7 +113,6 @@ export async function getServerSideProps({params}) {
     const {pageslug} = params;
     try {
         const contentResponse = await fetcher(
-            `api`, 
             `slugify/slugs/company/${pageslug}`, 
             `populate=*&_sort=furtherNames.name_upto:ASC`
         )
