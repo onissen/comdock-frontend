@@ -99,7 +99,6 @@ export async function getServerSideProps({params}) {
     const {id} = params;
     try{
         const contentResponse = await fetcher(
-            'api',
             `persons/${id}`,
             'populate[personNetwork][populate][company][fields][0]=hr_number,company_name&populate[personNetwork][populate][hr_public][fields][0]=pub_date,pub_title,pub_summary,pub_icon'
         )

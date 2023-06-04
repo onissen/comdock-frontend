@@ -32,7 +32,6 @@ export default Persons
 export async function getStaticProps() {
   try {
     const contentResponse = await fetcher(
-      'api',
       `persons`,
       'fields[0]=first_name&fields[1]=sir_name&fields[2]=city'
     )

@@ -51,7 +51,6 @@ export async function getServerSideProps({params}) {
     const {id} = params;
     try {
         const contentResponse = await fetcher(
-            'api',
             `hr-publics/${id}`,
             `populate[company][fields][0]=company_name,hr_dept,hr_number&populate[docs][populate][certificate][fields][0]=url&populate[docs][populate][document][fields][0]=url&populate[docs][populate][user][fields][0]=name`
         )

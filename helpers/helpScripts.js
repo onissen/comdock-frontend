@@ -3,11 +3,11 @@ import { faFile } from '@fortawesome/free-regular-svg-icons';
 import { faBuilding, faCircleMinus, faCirclePlus, faCodeBranch, faEllipsis, faGraduationCap, faUser } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 
-export async function fetcher(mode='api', endpoint, query, options = {}) {
+export async function fetcher(endpoint, query, options = {}) {
     let response;
 
 
-    let url = process.env.NEXT_PUBLIC_STRAPI_URL+'/'+mode+'/'+endpoint+'?'+query;
+    let url = process.env.NEXT_PUBLIC_STRAPI_URL+'/api/'+endpoint+'?'+query;
 
     if (!options) {
       response = await fetch(url);
