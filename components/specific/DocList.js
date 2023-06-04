@@ -42,7 +42,7 @@ export default function DocList({content}) {
                                         </p>
                                         <div className="flex gap-4">
                                             {item.attributes.document.data ? (
-                                                <Link href={process.env.NEXT_PUBLIC_STRAPI+item.attributes.document.data.attributes.url} target="_blank">
+                                                <Link href={process.env.NEXT_PUBLIC_STRAPI_URL+item.attributes.document.data.attributes.url} target="_blank">
                                                     <button className="flex items-center font-medium text-sm text-primary hover:bg-sky-200/70 rounded-md px-2 py-1">
                                                         <FontAwesomeIcon icon={faFile} className="w-3" />
                                                         <span className="ml-3">Dokument öffnen</span>
@@ -50,7 +50,7 @@ export default function DocList({content}) {
                                                 </Link>
                                             ) : ''}
                                             {item.attributes.certificate.data ? (
-                                                <Link href={process.env.NEXT_PUBLIC_STRAPI+item.attributes.certificate.data?.attributes.url} target="_blank">
+                                                <Link href={process.env.NEXT_PUBLIC_STRAPI_URL+item.attributes.certificate.data?.attributes.url} target="_blank">
                                                     <button className="flex items-center font-medium text-sm  text-primary hover:bg-sky-200/70 rounded-md px-2 py-1">
                                                         <FontAwesomeIcon icon={faFileSignature} className="w-5" />
                                                         <span className="ml-3">Beglaubigungsdokument öffnen</span>

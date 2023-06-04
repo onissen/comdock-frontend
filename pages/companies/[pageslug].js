@@ -2,8 +2,7 @@ import style from '@/layout/ContentLists.module.sass';
 import Layout from "@/components/common/Layout"
 import DetailPage from "@/components/pagetypes/DetailPage";
 import NetworkList from "@/components/specific/NetworkList";
-import { fetcher } from "@/helpers/api";
-import { markdownToHtml } from "@/helpers/helpScripts";
+import { fetcher, markdownToHtml } from "@/helpers/helpScripts";
 import { faArrowRightArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PablicationSection from '@/components/specific/PublicationSection';
@@ -114,37 +113,41 @@ export async function getServerSideProps({params}) {
     const {pageslug} = params;
     try {
         const contentResponse = await fetcher(
-        `${process.env.NEXT_PUBLIC_STRAPI_URL}/slugify/slugs/company/${pageslug}?populate=*&_sort=furtherNames.name_upto:ASC`
+            `api`, 
+            `slugify/slugs/company/${pageslug}`, 
+            `populate=*&_sort=furtherNames.name_upto:ASC`
         )
-        const networkResponse = await fetcher(
-    `${process.env.NEXT_PUBLIC_STRAPI_URL}/slugify/slugs/company/${pageslug}?fields=company_name&populate[networkCompanies][populate][connected_company][fields][0]=hr_number,company_name&populate[networkPersons][populate][connected_person][fields][0]=id,first_name,sir_name&populate[networkCompanies][populate][hr_public][fields][0]=id&populate[networkPersons][populate][hr_public][fields][0]=id&populate[docs][populate][document][fields][0]=url&populate[docs][populate][certificate][fields][0]=url&populate[docs][populate][user][fields][0]=name`
+
+        const relationalResponse = await fetcher(
+            `slugify/slugs/company/${pageslug}`,
+            `fields=company_name&populate[networkCompanies][populate][connected_company][fields][0]=hr_number,company_name&populate[networkPersons][populate][connected_person][fields][0]=id,first_name,sir_name&populate[networkCompanies][populate][hr_public][fields][0]=id&populate[networkPersons][populate][hr_public][fields][0]=id&populate[docs][populate][document][fields][0]=url&populate[docs][populate][certificate][fields][0]=url&populate[docs][populate][user][fields][0]=name`
         )
 
         const corp_object = await markdownToHtml(contentResponse.data.attributes.corp_object);
         
         // Sort networkCompanies and networkPersons by their 'since' field
-        networkResponse.data.attributes.networkCompanies.sort((oldest, newest) => {
+        relationalResponse.data.attributes.networkCompanies.sort((oldest, newest) => {
             return new Date(newest.since) - new Date(oldest.since);
         });
 
-        networkResponse.data.attributes.networkPersons.sort((oldest, newest) => {
+        relationalResponse.data.attributes.networkPersons.sort((oldest, newest) => {
             return new Date(newest.since) - new Date(oldest.since);
         });
 
-        const activeNetworkCompanies = networkResponse.data.attributes.networkCompanies.filter(company => company.upto === null || company.upto === '');
-        const deletedNetworkCompanies = networkResponse.data.attributes.networkCompanies.filter(company => company.upto !== null && company.upto !== '');
+        const activeNetworkCompanies = relationalResponse.data.attributes.networkCompanies.filter(company => company.upto === null || company.upto === '');
+        const deletedNetworkCompanies = relationalResponse.data.attributes.networkCompanies.filter(company => company.upto !== null && company.upto !== '');
 
-        const activeNetworkPersons = networkResponse.data.attributes.networkPersons.filter(person => person.upto === null || person.upto === '');
-        const deletedNetworkPersons = networkResponse.data.attributes.networkPersons.filter(person => person.upto !== null && person.upto !== '');
+        const activeNetworkPersons = relationalResponse.data.attributes.networkPersons.filter(person => person.upto === null || person.upto === '');
+        const deletedNetworkPersons = relationalResponse.data.attributes.networkPersons.filter(person => person.upto !== null && person.upto !== '');
 
         return{
             props: {
                 item: contentResponse.data,
                 corp_object,
                 networkInfo: {
-                    ...networkResponse.data,
+                    ...relationalResponse.data,
                     attributes: {
-                        ...networkResponse.data.attributes,
+                        ...relationalResponse.data.attributes,
                         activeNetworkCompanies: activeNetworkCompanies,
                         deletedNetworkCompanies: deletedNetworkCompanies,
                         activeNetworkPersons: activeNetworkPersons,
