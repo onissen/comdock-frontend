@@ -2,7 +2,7 @@ import Layout from "@/components/common/Layout";
 import { ConnectionFailOnSite } from "@/components/errors/ConnectionFailOnSite";
 import BlankPage from "@/components/pagetypes/BlankPage";
 import PersonsList from "@/components/specific/PersonsList";
-import { fetcher } from "@/helpers/api";
+import { fetcher } from "@/helpers/helpScripts";
 import { useEffect } from "react";
 
 
@@ -32,8 +32,10 @@ export default Persons
 export async function getStaticProps() {
   try {
     const contentResponse = await fetcher(
-      `${process.env.NEXT_PUBLIC_STRAPI_URL}/persons?fields[0]=first_name&fields[1]=sir_name&fields[2]=city`
-    );
+      'api',
+      `persons`,
+      'fields[0]=first_name&fields[1]=sir_name&fields[2]=city'
+    )
     return {
       props: {
         persons: contentResponse,
