@@ -20,22 +20,18 @@ export async function fetcher(endpoint, query, options = {}) {
   }
 
 export function germanDate(dateString) {
-    // Convert date string to Date object
-    const date = new Date(dateString);
-
-    // Get day, month, and year from date object
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const year = date.getFullYear().toString();
-
-    // Format date string as DD.MM.YYYY
-    const formattedDate = `${day}.${month}.${year}`;
-
-    // Return formatted date string
-    return formattedDate;
+  // Renders the given dateString to German format TT.MM.YYYY
+  const formatOptions = {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  }
+  const date = new Date(dateString).toLocaleDateString('de-DE', formatOptions)
+  return date;
 }
 
 export const Now = () => {
+    // Renderes the current Date and Time in German format TT.MM.YYYY, HH:MM
     const [now, setNow] = useState('');
   
     useEffect(() => {
