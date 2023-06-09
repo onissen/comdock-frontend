@@ -1,3 +1,4 @@
+import { unsetToken } from '@/helpers/auth'
 import { Disclosure } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
@@ -21,6 +22,9 @@ export default function Nav({nopageHeader, backend}) {
     (router.pathname.startsWith("/companies") && item.href === "/companies") ||
     (router.pathname.startsWith("/persons") && item.href === "/persons")
   }));
+  const logout = () => {
+    unsetToken();
+  };
   return (
     <Disclosure as="nav" className={`bg-primary-600 ${nopageHeader ? 'rounded-b-lg' : ''}`}>
       {({ open }) => (
@@ -76,7 +80,7 @@ export default function Nav({nopageHeader, backend}) {
                         COMDOCK Legal
                       </Link>
                     ) : (
-                      <Link href="/" className="nav-item rounded-md px-3 py-2 text-sm font-medium">
+                      <Link onClick={logout} href="/" className="nav-item rounded-md px-3 py-2 text-sm font-medium">
                         Abmelden
                       </Link>
                     )}

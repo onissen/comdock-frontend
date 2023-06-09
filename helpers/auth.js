@@ -1,8 +1,8 @@
+
+import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { fetcher } from "./helpScripts";
-import Cookies from "js-cookie";
-
-let userState;
+import Router from "next/router";
 
 export const setToken = (data) => {
     if (typeof window === 'undefined') {
@@ -13,37 +13,32 @@ export const setToken = (data) => {
     Cookies.set('jwt', data.jwt);
   
     if (Cookies.get('username')) {
-      Router.push('/');
+      Router.push('/legal');
     }
   };
   
-  export const unsetToken = () => {
+export const unsetToken = () => {
     if (typeof window === 'undefined') {
-      return;
+        return;
     }
     Cookies.remove('id');
     Cookies.remove('jwt');
     Cookies.remove('username');
-  
-    Router.reload('/');
-  };
 
-export const getTokenFromLocalCookie = () => {
-    return Cookies.get('jwt');
+    Router.push('/legal');
 };
 
 export const getUserFromLocalCookie = () => {
     const jwt = getTokenFromLocalCookie();
     if (jwt) {
       return fetcher(
-        `users/me`, 
-        '',
-        {
-            headers: {
+        `users/me`,
+        ``,
+        {headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${jwt}`,
-            },
-      })
+          },
+        })
         .then((data) => {
           return data.username;
         })
@@ -51,7 +46,13 @@ export const getUserFromLocalCookie = () => {
     } else {
       return;
     }
-  };
+};
+
+export const getTokenFromLocalCookie = () => {
+    return Cookies.get('jwt');
+};
+
+let userState;
 
 export const useFetchUser = () => {
     const [data, setUser] = useState({
