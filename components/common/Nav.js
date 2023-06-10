@@ -76,11 +76,11 @@ export default function Nav({nopageHeader, backend}) {
                 <div className="hidden sm:ml-auto sm:block">
                   <div className="flex space-x-4">
                     {!backend ? ( 
-                      <Link href="/legal" target="_blank" className="nav-item rounded-md px-3 py-2 text-sm font-medium">
+                      <Link href="/legal" className="nav-item rounded-md px-3 py-2 text-sm font-medium">
                         COMDOCK Legal
                       </Link>
                     ) : (
-                      <Link onClick={logout} href="/" className="nav-item rounded-md px-3 py-2 text-sm font-medium">
+                      <Link onClick={logout} href="/legal" className="nav-item rounded-md px-3 py-2 text-sm font-medium">
                         Abmelden
                       </Link>
                     )}

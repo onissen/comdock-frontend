@@ -1,6 +1,6 @@
 import Layout from '@/components/common/Layout.js';
 import LoginForm from '@/components/specific/LoginForm';
-import { setToken, unsetToken, useFetchUser } from '@/helpers/auth';
+import { setToken, useFetchUser } from '@/helpers/auth';
 import { fetcher } from '@/helpers/helpScripts';
 import { useState } from 'react';
 
@@ -30,6 +30,7 @@ const CDLLogin = () => {
                 }),
             }
         );
+        // FIXME: Fallback if Connection failed
         setToken(responseData);
     };
     
@@ -40,7 +41,9 @@ const CDLLogin = () => {
 
     return (
         <Layout siteTitle="Login">
-            <LoginForm handleChange={handleChange} handleSubmit={handleSubmit} />
+            <main className="mt-3">
+                <LoginForm handleChange={handleChange} handleSubmit={handleSubmit} />
+            </main>
         </Layout>
     )
 }
