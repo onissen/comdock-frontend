@@ -1,6 +1,13 @@
+import { useFetchUser } from "@/helpers/auth";
 import BreadcrumbRenderer from "../specific/BreadcrumbRenderer";
+import Router from "next/router";
 
 export default function BackendPage () {
+    // Authentication
+    const { user, loading} = useFetchUser();
+    if (!user && !loading) {
+        Router.push('/legal/login');
+    }
     return (
         <>
         <div className="bg-primary text-zinc-100 rounded-b-lg py-3">                
@@ -9,11 +16,8 @@ export default function BackendPage () {
                 <div className="h1">Ihre Aufgaben</div>
             </div>
         </div>
-        <div className="flex mt-8">
-            <aside className="w-72 bg-white py-4 px-2 shadow-sm rounded-lg">
-                Sidebar Menu
-            </aside>
-            <main className="pl-6">Main</main>
+        <div className="wrapper">
+            Bla
         </div>
         </>
     )

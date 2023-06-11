@@ -80,7 +80,7 @@ export default function Nav({nopageHeader, backend}) {
                         COMDOCK Legal
                       </Link>
                     ) : (
-                      <Link onClick={logout} href="/legal" className="nav-item rounded-md px-3 py-2 text-sm font-medium">
+                      <Link onClick={logout} href="#" className="nav-item rounded-md px-3 py-2 text-sm font-medium">
                         Abmelden
                       </Link>
                     )}
