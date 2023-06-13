@@ -1,4 +1,4 @@
-import { unsetToken } from '@/helpers/auth'
+import { unsetToken, useFetchUser } from '@/helpers/auth'
 import { Disclosure } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
@@ -25,6 +25,7 @@ export default function Nav({nopageHeader, backend}) {
   const logout = () => {
     unsetToken();
   };
+  const {user} = useFetchUser()
   return (
     <Disclosure as="nav" className={`bg-primary-600 ${nopageHeader ? 'rounded-b-lg' : ''}`}>
       {({ open }) => (
@@ -80,9 +81,16 @@ export default function Nav({nopageHeader, backend}) {
                         COMDOCK Legal
                       </Link>
                     ) : (
-                      <Link onClick={logout} href="#" className="nav-item rounded-md px-3 py-2 text-sm font-medium">
-                        Abmelden
-                      </Link>
+                      <>
+                        <Link href="/" className="nav-item rounded-md px-3 py-2 text-sm font-medium" target="_blank">
+                          COMDOCK Index öffnen
+                        </Link>
+                        { user ? (
+                        <Link onClick={logout} href="#" className="nav-item rounded-md px-3 py-2 text-sm font-medium">
+                          Abmelden
+                        </Link>
+                        ) : ''}
+                      </>
                     )}
                   </div>
                 </div>

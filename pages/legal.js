@@ -1,16 +1,18 @@
-import Layout from '@/components/common/Layout.js';
+import Layout from "@/components/common/Layout"
+import BlankPage from "@/components/pagetypes/BlankPage";
+import { useFetchUser } from "@/helpers/auth";
 import LoginForm from '@/components/specific/LoginForm';
-import { setToken, useFetchUser } from '@/helpers/auth';
+import { setToken } from '@/helpers/auth';
 import { fetcher } from '@/helpers/helpScripts';
 import { useState } from 'react';
 
-const CDLLogin = () => {
+export default function CDLHome () {
+    // Login Basic Process
     const [data, setData] = useState({
         identifier: '',
         password: '',
     });
 
-    const { user, loading } = useFetchUser();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -38,14 +40,23 @@ const CDLLogin = () => {
         setData({ ...data, [e.target.name]: e.target.value });
     };
 
+    // Test Authentication State, Show Login if not Authenticated
+    const { user, loading} = useFetchUser();
+    if (!user && !loading) {
+        return (
+            <Layout backend siteTitle="COMDOCK Legal" nopageHeader>
+                <main className="mt-3">
+                    <LoginForm handleChange={handleChange} handleSubmit={handleSubmit} />
+                </main>
+            </Layout>
+        )
+    }
 
     return (
-        <Layout siteTitle="Login">
-            <main className="mt-3">
-                <LoginForm handleChange={handleChange} handleSubmit={handleSubmit} />
-            </main>
+        <Layout backend siteTitle="COMDOCK Legal">
+            <BlankPage title="Ihre Aufgaben" noBreadcrumb>
+                
+            </BlankPage>
         </Layout>
     )
 }
-
-export default CDLLogin;
