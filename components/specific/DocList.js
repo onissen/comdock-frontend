@@ -34,11 +34,9 @@ export default function DocList({content}) {
                                 <Disclosure.Panel>
                                     <div className="px-5 pb-5">
                                         <p className='pb-3 text-sm text-primary'>
-                                        {item.attributes.certificate.data ? (
-                                        <span>Der Benutzer {item.attributes.user.data.attributes.name} hat dieses Dokument am {germanDate(item.attributes.signed_date)} digital signiert oder beglaubigt.</span>
-                                        ) : (
-                                            <span>Eine Unterschrift oder Beglaubigung zu diesem Dokument steht noch aus.</span>
-                                        )}
+                                        {/* {item.attributes.cdl_tasks.map((certificate) => {
+                                            <span>Der Benutzer {certificate.signer.data.attributes.name} hat dieses Dokument am {germanDate(certificate.signed_date)} digital signiert oder beglaubigt.</span>
+                                        })} */}
                                         </p>
                                         <div className="flex gap-4">
                                             {item.attributes.document.data ? (
@@ -49,14 +47,14 @@ export default function DocList({content}) {
                                                     </button>
                                                 </Link>
                                             ) : ''}
-                                            {item.attributes.certificate.data ? (
+                                            {/* {item.attributes.certificate.data ? (
                                                 <Link href={process.env.NEXT_PUBLIC_STRAPI_URL+item.attributes.certificate.data?.attributes.url} target="_blank">
                                                     <button className="flex items-center font-medium text-sm  text-primary hover:bg-sky-200/70 rounded-md px-2 py-1">
                                                         <FontAwesomeIcon icon={faFileSignature} className="w-5" />
                                                         <span className="ml-3">Beglaubigungsdokument öffnen</span>
                                                     </button>
                                                 </Link>
-                                            ) : ''}
+                                            ) : ''} */}
                                         </div>
                                     </div>
                                 </Disclosure.Panel>
