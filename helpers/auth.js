@@ -40,7 +40,10 @@ export const getUserFromLocalCookie = () => {
           },
         })
         .then((data) => {
-          return data.username;
+          return {
+            user: data.username,
+            name: data.name
+          };
         })
         .catch((error) => console.error(error));
     } else {
@@ -58,6 +61,7 @@ export const useFetchUser = () => {
     const [data, setUser] = useState({
       user: userState || null,
       loading: userState === undefined,
+      name: userState ? userState.name : null
     });
   
     useEffect(() => {
@@ -67,9 +71,13 @@ export const useFetchUser = () => {
   
       let isMounted = true;
       const resolveUser = async () => {
-        const user = await getUserFromLocalCookie();
+        const userData = await getUserFromLocalCookie();
         if (isMounted) {
-          setUser({ user, loading: false });
+          setUser({ 
+            user: userData?.user, 
+            name: userData?.name, 
+            loading: false
+          });
         }
       };
       resolveUser();
