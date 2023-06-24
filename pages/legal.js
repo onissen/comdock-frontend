@@ -1,12 +1,12 @@
 import Layout from "@/components/common/Layout"
-import BlankPage from "@/components/pagetypes/BlankPage";
 import { useFetchUser } from "@/helpers/auth";
 import LoginForm from '@/components/specific/LoginForm';
 import { setToken } from '@/helpers/auth';
 import { fetcher } from '@/helpers/helpScripts';
-import {useState } from 'react';
+import TaskList from "@/components/specific/TaskList";
+import { useEffect, useState } from "react";
 
-const CDLHome = (tasks) => {
+const CDLHome = () => {
     // Login Basic Process
     const [data, setData] = useState({
         identifier: '',
@@ -36,6 +36,7 @@ const CDLHome = (tasks) => {
         setToken(responseData);
     };
     
+    
     const handleChange = (e) => {
         setData({ ...data, [e.target.name]: e.target.value });
     };
@@ -52,6 +53,7 @@ const CDLHome = (tasks) => {
         )
     }
 
+    
     return (
         <Layout backend siteTitle="COMDOCK Legal" nopageHeader>
             <div className="bg-white rounded-lg p-4 wrapper mt-8 shadow">
@@ -60,28 +62,24 @@ const CDLHome = (tasks) => {
             </div>
             <div className="wrapper">
                 <h1 className="text-primary">Ihre Aufgaben</h1>
+                <TaskList />
             </div>
         </Layout>
     )
+  
+}
+
+export async function getStaticProps({props}) {
+    const contentResponse = await fetcher(
+        `cert-documents`,
+        `filters[cdl_tasks][signer][username][$eq]=ra_mustermann&populate[companyDocs][fields]=company_name&populate[hr_id][fields]=pub_date&populate[hr_id][populate][company][fields]=company_name&populate[document][fields]=url&populate[cdl_tasks][populate][certificate_doc][fields]=url`
+    )
+    console.log(contentResponse)
+    return {
+        props: {
+            tasks: contentResponse.data,
+        },
+    };
 }
 
 export default CDLHome;
-
-export async function getStaticProps() {
-    try {
-        const contentResponse = await fetcher(
-        'companies', 
-        'fields[0]=company_name&fields[1]=hr_court&fields[2]=hr_dept&fields[3]=hr_number&populate=main_branch')
-        return {
-            props: {
-                tasks: contentResponse,
-            },
-        };
-    } catch (error) {
-        return {
-        props: {
-            tasks: null,
-        },
-        };
-    }
-}
