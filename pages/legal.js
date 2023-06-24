@@ -53,7 +53,22 @@ const CDLHome = () => {
         )
     }
 
-    
+    let contentResponse;
+    async function fetchTasks(user) {
+        contentResponse = await fetcher(
+            `cert-documents`,
+            `filters[cdl_tasks][signer][username][$eq]=${user}&populate[companyDocs][fields]=company_name&populate[hr_id][fields]=pub_date&populate[hr_id][populate][company][fields]=company_name&populate[document][fields]=url&populate[cdl_tasks][populate][certificate_doc][fields]=url`
+        )
+    }
+
+    async function  test () {
+        if (user) {
+            await fetchTasks(user)
+            console.log(contentResponse)
+        }
+    }
+    test()
+
     return (
         <Layout backend siteTitle="COMDOCK Legal" nopageHeader>
             <div className="bg-white rounded-lg p-4 wrapper mt-8 shadow">
@@ -62,6 +77,7 @@ const CDLHome = () => {
             </div>
             <div className="wrapper">
                 <h1 className="text-primary">Ihre Aufgaben</h1>
+                <p>{contentResponse}</p>
                 <TaskList />
             </div>
         </Layout>
@@ -69,7 +85,7 @@ const CDLHome = () => {
   
 }
 
-export async function getStaticProps({props}) {
+export async function getStaticProps() {
     const contentResponse = await fetcher(
         `cert-documents`,
         `filters[cdl_tasks][signer][username][$eq]=ra_mustermann&populate[companyDocs][fields]=company_name&populate[hr_id][fields]=pub_date&populate[hr_id][populate][company][fields]=company_name&populate[document][fields]=url&populate[cdl_tasks][populate][certificate_doc][fields]=url`
