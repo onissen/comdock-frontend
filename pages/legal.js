@@ -61,7 +61,7 @@ const CDLHome = ({allTasks}) => {
                 Vielen Dank, dass Sie unsere Seite besuchen.</p>
             </div>
             <div className="wrapper">
-                <h1 className="text-primary">Ihre Aufgaben</h1>
+                
                 <TaskList allTasks={allTasks} user={user} />
             </div>
         </Layout>

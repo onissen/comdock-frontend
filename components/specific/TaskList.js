@@ -22,11 +22,23 @@ export default function TaskList({user, allTasks}) {
                 hr_id: item.attributes.hr_id,
                 document: item.attributes.document,
                 cdl_tasks: item.attributes.cdl_tasks.filter(function (task) {
-                return task.signer.data.attributes.username === "onissen";
+                return task.signer.data.attributes.username === user;
                 })
             }
         };
     });
+
+    var tasksNew = userTasks.filter(function(item) {
+        return item.attributes.cdl_tasks.some(function(task) {
+          return task.signed_date == null;
+        });
+      });
+
+    var tasksDone = userTasks.filter(function(item) {
+        return item.attributes.cdl_tasks.some(function(task) {
+          return task.signed_date !== null;
+        });
+      });
 
 
     // Modal Logic
@@ -49,7 +61,8 @@ export default function TaskList({user, allTasks}) {
     }
     return(
         <>
-            {userTasks.map((item) => (
+            <h1 className="text-primary">Ihre Aufgaben</h1>
+            {tasksNew.map((item) => (
                 <>
                     {item.attributes.cdl_tasks.map((task) => (
                         <>
@@ -112,7 +125,8 @@ export default function TaskList({user, allTasks}) {
                     ))}
                 </>
             ))}
-            
+            <h1 className='text-primary'>Erledigte Aufgaben</h1>
+            {/* tasksDone */}
         </>
     )
 }
