@@ -47,7 +47,7 @@ export default function Nav({nopageHeader, backend}) {
                 <div className="flex flex-shrink-0 items-center">
                   
                   {backend ? (
-                    <Link class="flex" href="/legal">
+                    <Link className="flex" href="/legal">
                       <img className="block h-8 w-auto" src="/icons/icon-light.svg" alt="COMDOCK Legal" />
                       <span className="ml-6 my-auto text-xl font-medium text-zinc-100">COMDOCK Legal</span>
                     </Link>
