@@ -3,7 +3,32 @@ import { Dialog, Transition } from '@headlessui/react';
 import Link from 'next/link';
 import { Fragment, useState } from 'react';
 
-export default function TaskList() {
+
+export default function TaskList({user, allTasks}) {
+    // Filter Tasks
+    
+    var userTasks = allTasks.data.filter(function(item) {
+        return item.attributes.cdl_tasks.filter(function(task) {
+          return task.signer.data.attributes.username == user;
+        }).length > 0;
+    })
+    .map(function (item) {
+        return {
+            id: item.id,
+            attributes: {
+                // Include other desired attributes here
+                docType: item.attributes.docType,
+                companyDocs: item.attributes.companyDocs,
+                hr_id: item.attributes.hr_id,
+                document: item.attributes.document,
+                cdl_tasks: item.attributes.cdl_tasks.filter(function (task) {
+                return task.signer.data.attributes.username === "onissen";
+                })
+            }
+        };
+    });
+
+
     // Modal Logic
     let [isOpen, setIsOpen] = useState(false)
 
@@ -22,65 +47,72 @@ export default function TaskList() {
         // Hier ggf. Daten mit übergeben
         
     }
-
-    return (
+    return(
         <>
-            <div className={`${style.taskItem} rounded-lg`}>
-                <Link href="#" onClick={openModal} >
-                    <p className={`${style.summary}`}>
-                        Task
-                    </p>
-                    <p className={`${style.meta}`}>DocType &bull; Company</p>
-                </Link>
-            </div>
-
-            <Transition appear show={isOpen} as={Fragment}>
-                <Dialog as="div" className="relative z-10" onClose={closeModal}>
-                    <Transition.Child
-                        as={Fragment}
-                        enter="ease-out duration-300"
-                        enterFrom="opacity-0"
-                        enterTo="opacity-100"
-                        leave="ease-in duration-200"
-                        leaveFrom="opacity-100"
-                        leaveTo="opacity-0"
-                    >
-                        <div className="fixed inset-0 bg-black bg-opacity-25" />
-                    </Transition.Child>
-                    <div className="fixed inset-0 overflow-y-auto">
-                        <div className="flex min-h-full items-center justify-center p-4 text-center">
-                            <Transition.Child
-                                as={Fragment}
-                                enter="ease-out duration-300"
-                                enterFrom="opacity-0 scale-95"
-                                enterTo="opacity-100 scale-100"
-                                leave="ease-in duration-200"
-                                leaveFrom="opacity-100 scale-100"
-                                leaveTo="opacity-0 scale-95"
-                            >
-                                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                                    <div className="mt-2">
-                                        <p className="text-sm text-gray-500">
-                                            Wir bitten Sie das Dokument WX der Firma YZ zu AB.
-                                        </p>
-                                        <p>Dokument anzeigen</p>
-                                    </div>
-
-                                    <div className="mt-4">
-                                        <button
-                                            type="button"
-                                            className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                                            onClick={closeModal}
+            {userTasks.map((item) => (
+                <>
+                    {item.attributes.cdl_tasks.map((task) => (
+                        <>
+                            <div className={`${style.taskItem} rounded-lg`}>
+                                <Link href="#" onClick={openModal} > 
+                                    <p className={`${style.summary}`}>
+                                        {task.task}
+                                    </p>
+                                    <p className={`${style.meta}`}>{item.attributes.docType} &bull; {item.attributes.companyDocs.data.attributes.company_name}</p>
+                                </Link>
+                            </div>
+                            <Transition appear show={isOpen} as={Fragment}>
+                            <Dialog as="div" className="relative z-10" onClose={closeModal}>
+                                <Transition.Child
+                                    as={Fragment}
+                                    enter="ease-out duration-300"
+                                    enterFrom="opacity-0"
+                                    enterTo="opacity-100"
+                                    leave="ease-in duration-200"
+                                    leaveFrom="opacity-100"
+                                    leaveTo="opacity-0"
+                                >
+                                    <div className="fixed inset-0 bg-black bg-opacity-25" />
+                                </Transition.Child>
+                                <div className="fixed inset-0 overflow-y-auto">
+                                    <div className="flex min-h-full items-center justify-center p-4 text-center">
+                                        <Transition.Child
+                                            as={Fragment}
+                                            enter="ease-out duration-300"
+                                            enterFrom="opacity-0 scale-95"
+                                            enterTo="opacity-100 scale-100"
+                                            leave="ease-in duration-200"
+                                            leaveFrom="opacity-100 scale-100"
+                                            leaveTo="opacity-0 scale-95"
                                         >
-                                            Jetzt unterzeichnen
-                                        </button>
+                                            <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                                                <div className="mt-2">
+                                                    <p className="text-sm text-gray-500">
+                                                        Wir bitten Sie das Dokument WX der Firma YZ zu AB.
+                                                    </p>
+                                                    <p>Dokument anzeigen</p>
+                                                </div>
+
+                                                <div className="mt-4">
+                                                    <button
+                                                        type="button"
+                                                        className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                                                        onClick={closeModal}
+                                                    >
+                                                        Jetzt unterzeichnen
+                                                    </button>
+                                                </div>
+                                            </Dialog.Panel>
+                                        </Transition.Child>
                                     </div>
-                                </Dialog.Panel>
-                            </Transition.Child>
-                        </div>
-                    </div>
-                </Dialog>
-            </Transition>
+                                </div>
+                            </Dialog>
+                        </Transition>
+                        </>
+                    ))}
+                </>
+            ))}
+            
         </>
     )
 }
