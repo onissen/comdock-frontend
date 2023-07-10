@@ -4,7 +4,7 @@ import LoginForm from '@/components/specific/LoginForm';
 import { setToken } from '@/helpers/auth';
 import { fetcher } from '@/helpers/helpScripts';
 import TaskList from "@/components/specific/TaskList";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const CDLHome = ({allTasks}) => {
     // Login Basic Process
@@ -40,6 +40,7 @@ const CDLHome = ({allTasks}) => {
         setData({ ...data, [e.target.name]: e.target.value });
     };
 
+    
     // Test Authentication State, Show Login if not Authenticated
     const { user, loading, name } = useFetchUser();
     if (!user && !loading) {

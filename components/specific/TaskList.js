@@ -1,3 +1,4 @@
+import { fetcher } from '@/helpers/helpScripts';
 import style from '@/layout/CDLegal.module.sass';
 import { faBuilding, faFile, faSection } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -30,6 +31,8 @@ export default function TaskList({user, allTasks}) {
         };
     });
 
+    
+
     var tasksNew = userTasks.filter(function(item) {
         return item.attributes.cdl_tasks.some(function(task) {
           return task.signed_date == null;
@@ -42,7 +45,37 @@ export default function TaskList({user, allTasks}) {
         });
       });
 
+    // Task Completion
+    
 
+    const completeTask = async (e) => {
+        e.preventDefault();
+        try {
+            await fetcher(
+                `cert-documents/3`,
+                '',
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(
+                        {
+                            "data": {
+                                "cdl_tasks": [
+                                    {
+                                        "id": completionData.id,
+                                        "signed_date": new Date()
+                                    }
+                                ]
+                            }
+                        }
+                    ),
+                    method: 'PUT'
+                }
+            )
+        }
+        catch {}
+      }
     
     // Modal Logic
     let [isOpen, setIsOpen] = useState(false)
@@ -142,9 +175,10 @@ export default function TaskList({user, allTasks}) {
                                                         </p>
                                                     </div>
 
-                                                    <form>
+                                                    <form onSubmit={completeTask}>
                                                         {task.task == "Digitale Beglaubigung mit Dokument" || task.task =="Digitale Unterschrift mit Dokument" ? (
-                                                            
+                                                            /* FIXME: Dieses Auswahlfeld wird fälschlicherweise bei allen Einträgen gezeigt,
+                                                             wenn nur ein Element in der Liste mit Dokument fordert. */
                                                             <div className="col-span-full">
                                                                 {/* FIXME: Es gibt noch keine Ansicht für ein ausgewähltes Dokument */}
                                                                 <label htmlFor="cert-doc" className="block text-sm font-medium leading-6 text-gray-900">
@@ -155,7 +189,12 @@ export default function TaskList({user, allTasks}) {
                                                                         <div className="mt-4 flex text-sm leading-6 text-gray-600">
                                                                             <label htmlFor="file-upload" className="file-input-label">
                                                                                 <span>Vom Computer auswählen</span>
-                                                                                <input id="file-upload" name="file-upload" type="file" className="sr-only" />
+                                                                                <input 
+                                                                                    id="certificate_doc"
+                                                                                    name="certificate_doc"
+                                                                                    type="file"
+                                                                                    className="sr-only"
+                                                                                />
                                                                             </label>
                                                                         </div>
                                                                         <p className="text-xs leading-5 text-gray-600">PNG, JPG, SVG, PDF, XLS</p>
@@ -171,11 +210,11 @@ export default function TaskList({user, allTasks}) {
                                                             </label>
                                                             <div className="mt-2">
                                                                 <input
-                                                                type="password"
-                                                                name="confirmation"
-                                                                id="confirmation"
-                                                                className="form-control"
-                                                                required
+                                                                    type="password"
+                                                                    name="confirmation-password"
+                                                                    id="confirmation-password"
+                                                                    className="form-control"
+                                                                    required
                                                                 />
                                                             </div>
                                                         </div>
@@ -185,7 +224,7 @@ export default function TaskList({user, allTasks}) {
                                                             </button>
                                                             <button type="submit" className="btn btn-primary">
                                                                 Aufgabe abschließen
-                                                                {/* FIXME: Mit dem Submit umgehen, einen Danke Alert onSite anzeigen */}
+                                                                {/* FIXME: Den Submit richtig handlen , einen Danke Alert onSite anzeigen */}
                                                             </button>
                                                         </div>
                                                     </form>
