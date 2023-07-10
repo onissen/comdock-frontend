@@ -48,12 +48,12 @@ export default function TaskList({user, allTasks}) {
     // Task Completion
     
 
-    const completeTask = async (e) => {
+    const completeTask = async (e, id, taskid) => {
         e.preventDefault();
-        
+        // TODO: Test if Password is correct
         try {
             await fetcher(
-                `cert-documents/1`,
+                `cert-documents/${id}`,
                 '',
                 {
                     headers: {
@@ -64,7 +64,7 @@ export default function TaskList({user, allTasks}) {
                             "data": {
                                 "cdl_tasks": [
                                     {
-                                        "id": 16,
+                                        "id": taskid,
                                         "signed_date": new Date()
                                     }
                                 ]
@@ -178,7 +178,7 @@ export default function TaskList({user, allTasks}) {
                                                         </p>
                                                     </div>
 
-                                                    <form onSubmit={completeTask}>
+                                                    <form onSubmit={(e) => completeTask(e,item.id,task.id)}>
                                                         {task.task == "Digitale Beglaubigung mit Dokument" || task.task =="Digitale Unterschrift mit Dokument" ? (
                                                             /* FIXME: Dieses Auswahlfeld wird fälschlicherweise bei allen Einträgen gezeigt,
                                                              wenn nur ein Element in der Liste mit Dokument fordert. */
