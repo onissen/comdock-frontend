@@ -65,7 +65,7 @@ export default function TaskList({user, allTasks}) {
                                 "cdl_tasks": [
                                     {
                                         "id": taskid,
-                                        "signed_date": new Date()
+                                        "signed_date": new Date().toISOString().substring(0, 10)
                                     }
                                 ]
                             }
