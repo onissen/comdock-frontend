@@ -50,9 +50,10 @@ export default function TaskList({user, allTasks}) {
 
     const completeTask = async (e) => {
         e.preventDefault();
+        
         try {
             await fetcher(
-                `cert-documents/3`,
+                `cert-documents/1`,
                 '',
                 {
                     headers: {
@@ -63,7 +64,7 @@ export default function TaskList({user, allTasks}) {
                             "data": {
                                 "cdl_tasks": [
                                     {
-                                        "id": completionData.id,
+                                        "id": 16,
                                         "signed_date": new Date()
                                     }
                                 ]
@@ -74,7 +75,9 @@ export default function TaskList({user, allTasks}) {
                 }
             )
         }
-        catch {}
+        catch {
+            // Do something
+        }
       }
     
     // Modal Logic
