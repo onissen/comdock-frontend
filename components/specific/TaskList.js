@@ -50,7 +50,7 @@ export default function TaskList({user, allTasks}) {
 
     const completeTask = async (e, id, taskid) => {
         e.preventDefault();
-        // TODO: Test if Password is correct
+        // TODO: Test if Password is correct #53
         try {
             await fetcher(
                 `cert-documents/${id}`,
@@ -86,7 +86,7 @@ export default function TaskList({user, allTasks}) {
     /* 
         TODO: Bitte eine Funktion erstellen, die beim onclick des ersten ModalClose ausgeführt wird.
         Die Funktion muss dann den User zur Eingabe des Passwortes auffordern, 
-        das Passwort abgleichen und die Änderung an den Daten vornehmen, danach einen Alert-Modal anzeigen mit bedankendem Text
+        das Passwort abgleichen und die Änderung an den Daten vornehmen, danach einen Alert-Modal anzeigen mit bedankendem Text #35
     */
 
     function closeModal() {
@@ -104,6 +104,7 @@ export default function TaskList({user, allTasks}) {
             {tasksNew.map((item) => (
                 <>
                     {item.attributes.cdl_tasks.map((task) => (
+                        // TODO: Hier bitte ein Fallback if no Data #35
                         <>
                             <div className={`${style.taskItem} rounded-lg`}>
                                 <Link href="#" onClick={openModal} > 
@@ -181,9 +182,9 @@ export default function TaskList({user, allTasks}) {
                                                     <form onSubmit={(e) => completeTask(e,item.id,task.id)}>
                                                         {task.task == "Digitale Beglaubigung mit Dokument" || task.task =="Digitale Unterschrift mit Dokument" ? (
                                                             /* FIXME: Dieses Auswahlfeld wird fälschlicherweise bei allen Einträgen gezeigt,
-                                                             wenn nur ein Element in der Liste mit Dokument fordert. */
+                                                             wenn nur ein Element in der Liste mit Dokument fordert. #53 */
                                                             <div className="col-span-full">
-                                                                {/* FIXME: Es gibt noch keine Ansicht für ein ausgewähltes Dokument */}
+                                                                {/* FIXME: Es gibt noch keine Ansicht für ein ausgewähltes Dokument #53 */}
                                                                 <label htmlFor="cert-doc" className="block text-sm font-medium leading-6 text-gray-900">
                                                                     Zertifikat hinzufügen
                                                                 </label>
@@ -227,7 +228,7 @@ export default function TaskList({user, allTasks}) {
                                                             </button>
                                                             <button type="submit" className="btn btn-primary">
                                                                 Aufgabe abschließen
-                                                                {/* FIXME: Den Submit richtig handlen , einen Danke Alert onSite anzeigen */}
+                                                                {/* FIXME: Den Submit richtig handlen , einen Danke Alert onSite anzeigen #53 */}
                                                             </button>
                                                         </div>
                                                     </form>
@@ -242,7 +243,7 @@ export default function TaskList({user, allTasks}) {
                 </>
             ))}
             <h1 className='text-primary'>Erledigte Aufgaben</h1>
-            {/* tasksDone */}
+            {/* TODO tasksDone */}
         </>
     )
 }

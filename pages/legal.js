@@ -31,7 +31,7 @@ const CDLHome = ({allTasks}) => {
                 }),
             }
         );
-        // FIXME: Fallback if Connection failed
+        // FIXME: Fallback if Connection failed / Part of #52
         setToken(responseData);
     };
     
@@ -45,7 +45,7 @@ const CDLHome = ({allTasks}) => {
     const { user, loading, name } = useFetchUser();
     if (!user && !loading) {
         return (
-            <Layout backend siteTitle="COMDOCK Legal" nopageHeader>
+            <Layout  siteTitle="COMDOCK Legal" nopageHeader backend>
                 <main className="mt-3">
                     <LoginForm handleChange={handleChange} handleSubmit={handleSubmit} />
                 </main>
